@@ -1,3 +1,3 @@
 [submodule "info-beamer"]
 	path = info-beamer
-	url = https://github.com/dividuum/info-beamer.git
+	url = git://github.com/dividuum/info-beamer.git
