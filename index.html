@@ -90,8 +90,19 @@
         margin-bottom: 100px;
         font-size: 13px;
       }
+      #bottom img {
+        position: relative;
+        top: 4px;
+      }
       pre {
         margin: 0;
+      }
+      .light {
+        margin-top: 30px;
+        color: #999;
+      }
+      .light a {
+        color: #888;
       }
       .codehilite { 
         background-color: #DDD;
@@ -108,6 +119,16 @@
       .codehilite .s2 { color: #CC3300 } /* Literal.String.Double */
       .codehilite .mi { color: #008800 } /* Literal.Number.Integer */
     </style>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-29833630-1']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+       var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+       ga.src = 'http://www.google-analytics.com/ga.js';
+       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
   </head>
   <body>
     <a href="http://github.com/dividuum/info-beamer"><img id='fork' src="fork.png" alt="Fork me on GitHub"></a>
@@ -279,9 +300,15 @@
       </div>
       <hr/>
       <div id='bottom' class='centered'>
-        A project by Florian Wesch. Contact
-        <a href='mailto:fw@dividuum.de'>fw@dividuum.de</a> or visit 
+        A project by 
+        <img src='http://www.gravatar.com/avatar/1da51a03b64d071a4a0f0cf7daf15c4c?s=20'>
+        Florian Wesch. Contact me at
+        <a href='mailto:hello@info-beamer.org'>hello@info-beamer.org</a> or visit my website at
         <a href='http://dividuum.de/'>dividuum.de</a>.
+        <br/>
+        <div class='light'>
+          Icons where taken from the <a href='http://schollidesign.deviantart.com/art/Human-O2-Iconset-105344123'>Human O2 Iconset</a>.
+        </div>
       </div>
     </div>
   </body>
