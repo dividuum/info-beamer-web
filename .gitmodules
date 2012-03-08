@@ -1,0 +1,3 @@
+[submodule "info-beamer"]
+	path = info-beamer
+	url = git@bitbucket.org:dividuum/info-beamer.git

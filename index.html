@@ -1,0 +1,288 @@
+<html>
+  <head>
+    <link href='http://fonts.googleapis.com/css?family=Gudea' rel='stylesheet' type='text/css'>
+    <title>Info Beamer - The Interactive Multimedia Presenter</title>
+    <style>
+      body {
+        background-color: #FFF;
+      }
+      h1 {
+        font-size: 40px;
+      }
+      h3 {
+        font-size: 30px;
+      }
+      #logo {
+        position: relative;
+      }
+      #fork {
+        z-index: 10;
+        position: absolute; top: 0; right: 0; border: 0;
+      }
+      #intro {
+        width: 650px;
+        margin: 10px auto 60px auto;
+      }
+      #download {
+        position: absolute;
+        right: 30px;
+        bottom: 30px;
+        padding: 16px 30px;
+        display: inline-block;
+        line-height: normal;
+        font-family: Helvetica,arial,freesans,clean,sans-serif;
+        font-size: 24px;
+        font-weight: bold;
+        color: #666;
+        text-shadow: 0 1px rgba(255, 255, 255, 0.9);
+        background-color: whiteSmoke;
+        background-image: -moz-linear-gradient(whiteSmoke,#E5E5E5);
+        background-image: -webkit-linear-gradient(whiteSmoke,#E5E5E5);
+        -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#f5f5f5',endColorstr='#e5e5e5')";
+        border-radius: 3px;
+        border: 1px solid #DDD;
+        border-bottom-color: #BBB;
+        text-decoration: none;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        cursor: pointer;
+      }
+      #download:hover {
+        color: #337797;
+        text-decoration: none;
+        background-color: #f0f7fa;
+        background-image: -moz-linear-gradient(#f0f7fa,#d8eaf2);
+        background-image: -webkit-linear-gradient(#f0f7fa,#d8eaf2);
+        -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#f0f7fa',endColorstr='#d8eaf2')";
+        border-color: #cbe3ee;
+        border-bottom-color: #97c7dd;
+
+      }
+      #download:active {
+        color: #fff;
+        text-shadow: -1px -1px 0 rgba(0,0,0,0.3);
+        border-color: #2a65a0;
+        border-bottom-color: #0770a0;
+        background-color: #0770a0;
+        background-image: -moz-linear-gradient(#0770a0,#0ca6dd);
+        background-image: -webkit-linear-gradient(#0770a0,#0ca6dd);
+        -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#0770a0',endColorstr='#0ca6dd')";
+      }
+      #page {
+        width: 820px;
+        margin: auto;
+        font-family: 'Gudea', sans-serif;
+      }
+      .left {
+        width: 320px;
+        float: left;
+      }
+      .right {
+        width: 500px;
+        float: left;
+      }
+      .row {
+        height: 320px;
+      }
+      .centered {
+        text-align: center;
+      }
+      #bottom {
+        margin-bottom: 100px;
+        font-size: 13px;
+      }
+      pre {
+        margin: 0;
+      }
+      .codehilite { 
+        background-color: #DDD;
+        padding: 15px 20px;
+        font-size: 16px;
+        border: 1px solid black;
+        border-radius: 5px;
+        width: 600px;
+        margin: auto;
+      }
+      .codehilite .s { color: #AA3300 } /* Literal.String */
+      .codehilite .o { color: #555555 } /* Operator */
+      .codehilite .k { color: #006699; font-weight: bold } /* Keyword */
+      .codehilite .s2 { color: #CC3300 } /* Literal.String.Double */
+      .codehilite .mi { color: #008800 } /* Literal.Number.Integer */
+    </style>
+  </head>
+  <body>
+    <a href="http://github.com/dividuum/info-beamer"><img id='fork' src="fork.png" alt="Fork me on GitHub"></a>
+    <div id='page'>
+      <div id='logo'>
+        <img src='beamer.png' alt='Info Beamer!'>
+        <a href='http://github.com/dividuum/info-beamer/downloads' id='download'>Download from GitHub</a>
+      </div>
+      <div>
+        <h1 class='centered'>The Interactive Multimedia Presenter</h1>
+<!-- hello world -->
+<div class="codehilite"><pre><span class="n">gl</span><span class="p">.</span><span class="n">setup</span><span class="p">(</span><span class="mi">1024</span><span class="p">,</span> <span class="mi">768</span><span class="p">)</span>
+
+<span class="n">font</span> <span class="o">=</span> <span class="n">resource</span><span class="p">.</span><span class="n">load_font</span><span class="p">(</span><span class="s2">&quot;</span><span class="s">silkscreen.ttf&quot;</span><span class="p">)</span>
+
+<span class="k">function</span> <span class="nc">node</span><span class="p">.</span><span class="nf">render</span><span class="p">()</span>
+    <span class="n">font</span><span class="p">:</span><span class="n">write</span><span class="p">(</span><span class="mi">120</span><span class="p">,</span> <span class="mi">320</span><span class="p">,</span> <span class="s2">&quot;</span><span class="s">Hello World&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">end</span>
+</pre></div>
+<!-- hello world -->
+      </div>
+      <div id='intro'>
+        <p>
+
+          <b>info-beamer</b> allows you to rapidly prototype interactive multimedia
+          presentations using the Lua programming language.  <b>info-beamer</b> treats a
+          directory as a presentable unit. A directory (called a node)
+          consists of resource files (images, movies, fonts or shaders) and
+          a control script called node.lua. Read more in the <a href='doc/'>documentation</a>.
+
+        </p>
+      </div>
+      <div class='row'>
+        <div class='left'>
+          <img src='autoupdate.png'>
+        </div>
+        <div class='right'>
+          <h3>Rapid Development</h3>
+          <p>
+
+            Edit the code for your node, change images or exchange font
+            files. <b>info-beamer</b> will notice your changes and reload changed
+            files.  See the effects of your changes immediatelly.
+
+            <ul>
+              <li><b>info-beamer</b> uses the linux inotify API to detect changed files or directories.
+              <li>You never have to restart <b>info-beamer</b> to see changes you made. <b>info-beamer</b> can reload
+                  updated files for you.
+            </ul>
+          </p>
+        </div>
+      </div>
+      <div class='row'>
+        <div class='left'>
+          <img src='nested.png'>
+        </div>
+        <div class='right'>
+          <h3>Nested Content</h3>
+          <p>
+
+            Each directory forms a node. A node is the unit of presentation
+            for <b>info-beamer</b>. If a directory contains subdirectories, these
+            create child nodes. Child nodes can be rendered by parent
+            nodes. 
+
+            <ul>
+              <li>Allows you to create a toplevel node that switches between child nodes.
+              <li>Nodes can be developed independently and later composed into one
+                  presentation.
+            </ul>
+          </p>
+        </div>
+      </div>
+      <div class='row'>
+        <div class='left'>
+          <img src='control.png'>
+        </div>
+        <div class='right'>
+          <h3>Realtime control</h3>
+          <p>
+
+            Send OSC (open sound control) packets to <b>info-beamer</b>. Update
+            the state of your presentation in realtime. Or use TCP to
+            connect to <b>info-beamer</b> to see the debugging output of your
+            running code.
+
+            <ul>
+              <li>Simple UDP protocol and OSC protocol support.
+              <li>Let <b>info-beamer</b> display a directory shared using Dropbox. Since <b>info-beamer</b> will
+                  detect any changes to the directory, this will allow you
+                  to update your presentation from remote.
+            </ul>
+          </p>
+        </div>
+      </div>
+      <div class='row'>
+        <div class='left'>
+          <img src='performance.png'>
+        </div>
+        <div class='right'>
+          <h3>Performance</h3>
+          <p>
+
+            <b>info-beamer</b> uses OpenGL and will use hardware acceleration.
+            Full shader support using GLSL.
+
+            <ul>
+              <li>Load vertex and fragment shaders.
+              <li>Control your shaders with dynamic uniform values.
+              <li>Feed your shaders with textures from images, videos, 
+                  child nodes or even VNC connections.
+            </ul>
+          </p>
+        </div>
+      </div>
+      <div class='row'>
+        <div class='left'>
+          <img src='filetypes.png'>
+        </div>
+        <div class='right'>
+          <h3>Fileformat Support</h3>
+          <p>
+
+            Load images and truetype (TTF) fonts. Video playback is
+            supported using the powerful libav library.
+
+            <ul>
+              <li>Image loading is provided by DevIL.
+              <li>Video playback is powered by libav. It should play most video 
+                  files you might have.
+              <li>Use Shaders in the GLSL language.
+            </ul>
+          </p>
+        </div>
+      </div>
+      <div class='row'>
+        <div class='left'>
+          <img src='lua.png'>
+        </div>
+        <div class='right'>
+          <h3>Powered by Lua</h3>
+          <p>
+
+            <b>info-beamer</b> is controlled by your Lua code. A very simple API
+            is all you need to create advanced presentations. Lua enables
+            <b>info-beamer</b> to be truly rapid:
+
+            <ul>
+              <li>Update the running code in realtime. There is no need to restart <b>info-beamer</b>.
+              <li>Lua is a simple language. If you have basic programming experience, 
+                  you'll learn Lua in a few hours.
+            </ul>
+          </p>
+        </div>
+      </div>
+      <div class='row'>
+        <div class='left'>
+          <img src='opensource.png'>
+        </div>
+        <div class='right'>
+          <h3>Opensource</h3>
+          <p>
+
+            <b>info-beamer</b> is opensource software release under the BSD
+            2-clause license.  Use and modify the software as you like.
+
+          </p>
+        </div>
+      </div>
+      <hr/>
+      <div id='bottom' class='centered'>
+        A project by Florian Wesch. Contact
+        <a href='mailto:fw@dividuum.de'>fw@dividuum.de</a> or visit 
+        <a href='http://dividuum.de/'>dividuum.de</a>.
+      </div>
+    </div>
+  </body>
+</html>
