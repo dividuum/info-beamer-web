@@ -240,6 +240,7 @@ language</a>.</p>
 </ul>
 </li>
 <li><a href="#image-resourcerender_childname">image = resource.render_child(name)</a></li>
+<li><a href="#image-resourcecreate_snapshot">image = resource.create_snapshot()</a></li>
 </ul>
 </li>
 <li><a href="#opengl-related-functions">OpenGL Related Functions</a><ul>
@@ -250,7 +251,8 @@ language</a>.</p>
 <li><a href="#glortho">gl.ortho()</a></li>
 <li><a href="#glperspectivefov-eyex-eyey-eyez-centerx-centery-centerz">gl.perspective(fov, eyex, eyey, eyez, centerx, centery, centerz)</a></li>
 <li><a href="#glrotateangle-x-y-z">gl.rotate(angle, x, y, z)</a></li>
-<li><a href="#gltranslatex-y-z">gl.translate(x, y, z)</a></li>
+<li><a href="#gltranslatex-y-z">gl.translate(x, y, [z])</a></li>
+<li><a href="#glscalex-y-z">gl.scale(x, y, [z])</a></li>
 </ul>
 </li>
 <li><a href="#misc-functions">Misc Functions</a><ul>
@@ -275,6 +277,7 @@ language</a>.</p>
 </li>
 <li><a href="#utility-functions">Utility Functions</a><ul>
 <li><a href="#utilresource_loadertable_of_filenames">util.resource_loader(table_of_filenames)</a></li>
+<li><a href="#target-utilauto_loadertarget">target = util.auto_loader([target])</a></li>
 <li><a href="#utilshaderpair_loaderbasename">util.shaderpair_loader(basename)</a></li>
 <li><a href="#utilosc_mapperrouting_table">util.osc_mapper(routing_table)</a></li>
 <li><a href="#utildata_mapperrouting_table">util.data_mapper(routing_table)</a></li>
@@ -470,8 +473,8 @@ the <code>hello</code> node) and look for the file <code>node.lua</code>. This s
 you a new window showing the "Hello World" text in the center to the
 screen. </p>
 <p><code>info-beamer</code> is a rapid development environment. If you update the code
-for your example and save it, <code>info-beamer</code> will pickup the changes and
-show them to you immediatelly. Let's try this: While <code>info-beamer</code> is still
+for your example and save it, <code>info-beamer</code> will pick up the changes and
+show them to you immediately. Let's try this: While <code>info-beamer</code> is still
 running and displaying the "Hello World", change the string "Hello World"
 to "Updated World" in <code>node.lua</code> and save the file <code>node.lua</code>.
 <code>info-beamer</code> will notice that the file changed and reload it. The output
@@ -551,7 +554,7 @@ called <em>Green</em>. Then you just move the directories for node <em>Blue</em>
 <p>Inside of <em>Green</em> you can then render both <em>Red</em> and <em>Blue</em> into an image
 object using <code>resource.render_child</code> and display them on <em>Green</em>s virtual screen.</p>
 <p><img alt="nested rendering" src="nested.png" /></p>
-<p>The above setup is available in the directory <code>samples/blue</code>. It contains
+<p>The above setup is available in the directory <code>samples/green</code>. It contains
 <code>node.lua</code> and two child directories called <code>red</code> and <code>blue</code>.  Let's look at
 <code>green/node.lua</code>:</p>
 <div class="codehilite"><pre><span class="n">gl</span><span class="p">.</span><span class="n">setup</span><span class="p">(</span><span class="mi">800</span><span class="p">,</span> <span class="mi">600</span><span class="p">)</span>
@@ -674,18 +677,18 @@ load the shader pair <code>shader.vert</code> and <code>shader.frag</code> into 
 variable <code>shader</code>. The resource loader will also make sure that changed
 files will be reloaded. So if you edit and save for example <code>shader.frag</code>,
 <code>info-beamer</code> will instantly reload the shader. You can see changes
-to your effect immediatelly. This is great for rapidly development of
-effects.</p>
+to your effect immediatelly. This is great for rapidly developing effects.</p>
 <p>Inside of <code>node.render</code> we first clear the screen. Then we activate the
 shader, which was automatically created from the files <code>shader.vert</code> and
 <code>shader.frag</code> by <code>util.resource_loader</code>. We pass in a variable <code>Effect</code>
-which depends on a time value. This will create a dynamic effect.</p>
+which depends on a time value.  Finally, we draw <code>lua.png</code> with the
+applied shader. This will create a dynamic effect.</p>
 <h1 id="reference">Reference</h1>
 <h2 id="resource-loading">Resource Loading</h2>
 <h3 id="image-resourceload_imagefilename">image = resource.load_image(filename)</h3>
-<p>Loads the image file specified by <code>filename</code> into a texture objects.
+<p>Loads the image file specified by <code>filename</code> into a texture object.
 Please note that image loading is case sensitive. <code>info-beamer</code> supports
-the most common file formats.</p>
+most common file formats.</p>
 <p>The returned <code>image</code> objects supports the following methods:</p>
 <h4 id="imagedrawx1-y1-x2-y2">image:draw(x1, y1, x2, y2)</h4>
 <p>Draws the image into a rectangle specified by the give coordinates.</p>
@@ -704,13 +707,13 @@ or false if there was no next frame.</p>
 <h4 id="fps-videofps">fps = video:fps()</h4>
 <p>Returns the frame per seconds as specified by the video file.</p>
 <h3 id="font-resourceload_fontfilename">font = resource.load_font(filename)</h3>
-<p>Loads the given Truetype font file and returns a <code>font</code> objects. It
+<p>Loads the given Truetype font file and returns a <code>font</code> object. It
 supports the following methods:</p>
 <h4 id="width-fontwritex-y-text-size-r-g-b-a">width = font:write(x, y, text, size, r, g, b, [a])</h4>
 <p>Writes the provided <code>text</code> to the coordinates given in <code>x</code> and <code>y</code>. The
 color is given by <code>r</code>, <code>g</code>, <code>b</code> and <code>a</code>, the red, green, blue and alpha
-values. alpha is an optional value. default is 1.0 (opaque). The call will
-return the width of the rendered text in screen space.</p>
+values. The alpha value is optional, the default is 1.0 (opaque). The call
+will return the width of the rendered text in screen space.</p>
 <p><code>text</code> must be <code>UTF8</code> encoded, if you intend to use characters outside the
 ascii range.</p>
 <h4 id="width-fontwritex-y-text-size-texturelike">width = font:write(x, y, text, size, texturelike)</h4>
@@ -770,12 +773,21 @@ you need a persistent connection.</p>
 <code>node.render</code> within the child.</p>
 <p>The returned <code>image</code> supports the same methods like images objects created
 by <code>resource.load_image</code>.</p>
+<h3 id="image-resourcecreate_snapshot">image = resource.create_snapshot()</h3>
+<p>Copies the current framebuffer output (all things drawn up to this point) 
+into a new image. This allows you to feed the output of the node
+into a shader in the next iteration.</p>
+<p>This function can only be called inside of <code>node.render</code> (or any
+functions called from there). </p>
+<p>The returned <code>image</code> supports the same methods like images objects created
+by <code>resource.load_image</code>.</p>
 <h2 id="opengl-related-functions">OpenGL Related Functions</h2>
 <h3 id="glsetupwidth-height">gl.setup(width, height)</h3>
 <p>Initializes the virtual screen of the current node. Will also set the
 global variables <code>WIDTH</code> and <code>HEIGHT</code>.</p>
 <h3 id="glclearr-g-b-a">gl.clear(r, g, b, a)</h3>
-<p>Clears the virtual screen using the given color.</p>
+<p>Clears the virtual screen using the given color. It also deactivates
+the active shader.</p>
 <h3 id="glpushmatrix">gl.pushMatrix()</h3>
 <p>Like the native glPushMatrix call, this will save the current ModelView
 matrix. This function can only be called inside of <code>node.render</code> (or any
@@ -807,9 +819,12 @@ the camera will always be <code>0</code>, <code>-1</code>, <code>0</code>.</p>
 <p>Produces a rotation of <code>angle</code> degrees around the vector <code>x</code>, <code>y</code>, <code>z</code>.
 Consider using <code>gl.perspective</code> to see the scene in perspective mode. It
 might look better.</p>
-<h3 id="gltranslatex-y-z">gl.translate(x, y, z)</h3>
-<p>Produces a translation by <code>x</code>, <code>y</code>, <code>z</code>. Consider using <code>gl.perspective</code> to
-see the scene in perspective mode. It might look better.</p>
+<h3 id="gltranslatex-y-z">gl.translate(x, y, [z])</h3>
+<p>Produces a translation by <code>x</code>, <code>y</code>, <code>z</code>. <code>z</code> is optional and defaults to
+<code>0</code>.  Consider using <code>gl.perspective</code> to see the scene in perspective mode.
+It might look better.</p>
+<h3 id="glscalex-y-z">gl.scale(x, y, [z])</h3>
+<p>Scales by the given factors. <code>z</code> is optional and defaults to <code>1</code>.</p>
 <h2 id="misc-functions">Misc Functions</h2>
 <h3 id="sysnow">sys.now()</h3>
 <p>Returns a timestamp as a floating point number that will increment by 1 for
@@ -903,9 +918,8 @@ node with input from outside sources.</p>
 <p>All utility functions could be rewritten using the functions decribed
 above. They are provided for your convenience.</p>
 <h3 id="utilresource_loadertable_of_filenames">util.resource_loader(table_of_filenames)</h3>
-<p>Creates a magic resource loader that will load the resources from the given
-filenames and put them in global variables. It also keeps them updated if
-files change. Example usage:</p>
+<p>Creates a resource loader that will load the resources from the given
+filenames and put them in global variables. Example usage:</p>
 <div class="codehilite"><pre><span class="n">util</span><span class="p">.</span><span class="n">resource_loader</span><span class="p">{</span>
     <span class="s2">&quot;</span><span class="s">font.ttf&quot;</span><span class="p">,</span>
     <span class="s2">&quot;</span><span class="s">image.jpg&quot;</span><span class="p">,</span>
@@ -921,6 +935,30 @@ variable <code>font</code>. The global variable <code>image</code> will contain 
 And so on.</p>
 <p>The <code>util.resource_loader</code> will also detect changes to the files and reload
 them.</p>
+<h3 id="target-utilauto_loadertarget">target = util.auto_loader([target])</h3>
+<p>Creates a resource loader that tries to automatically load all files found
+in the node's directory. It will put the loaded resources into the table
+given by <code>target</code>. If no table is provided, the <code>auto_loader</code> will create a
+new table and return a reference. Use it like this to autoload resources
+into the global namespace:</p>
+<div class="codehilite"><pre><span class="n">util</span><span class="p">.</span><span class="n">auto_loader</span><span class="p">(</span><span class="nb">_G</span><span class="p">)</span>
+
+<span class="c1">-- if a file some_image.jpg existed, it is now available</span>
+<span class="c1">-- as a global variable:</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">some_image</span><span class="p">:</span><span class="n">size</span><span class="p">())</span>
+</pre></div>
+
+
+<p>Or if you want to avoid name collisions with existing global variables, you
+can use <code>auto_loader</code> like this:</p>
+<div class="codehilite"><pre><span class="n">resources</span> <span class="o">=</span> <span class="n">util</span><span class="p">.</span><span class="n">auto_loader</span><span class="p">()</span>
+
+<span class="c1">-- if a file some_image.jpg existed, it will now be available</span>
+<span class="c1">-- in the table resources:</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">resources</span><span class="p">.</span><span class="n">some_image</span><span class="p">:</span><span class="n">size</span><span class="p">())</span>
+</pre></div>
+
+
 <h3 id="utilshaderpair_loaderbasename">util.shaderpair_loader(basename)</h3>
 <p>Loads the vertex and fragment shader from two files called <code>basename.vert</code>
 and <code>basename.frag</code> and returns a shader objects.</p>
@@ -999,7 +1037,7 @@ it that way.</p>
 <ul>
 <li>
 <p>Keep it simple. <code>info-beamer</code> avoids unnecessary clutter. If a simple external 
-   Script could solve a problem, there is no need to do it in <code>info-beamer</code>. If a
+   script could solve a problem, there is no need to do it in <code>info-beamer</code>. If a
    problem is solvable within Lua, there is no need to include a C-version
    (unless speed prohibits a Lua solution).</p>
 </li>
