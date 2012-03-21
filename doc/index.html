@@ -278,7 +278,10 @@ language</a>.</p>
 <li><a href="#utility-functions">Utility Functions</a><ul>
 <li><a href="#utilresource_loadertable_of_filenames">util.resource_loader(table_of_filenames)</a></li>
 <li><a href="#target-utilauto_loadertarget">target = util.auto_loader([target])</a></li>
+<li><a href="#utilfile_watchfilename-handler">util.file_watch(filename, handler)</a></li>
 <li><a href="#utilshaderpair_loaderbasename">util.shaderpair_loader(basename)</a></li>
+<li><a href="#utilset_intervalinterval-callback">util.set_interval(interval, callback)</a></li>
+<li><a href="#utilpost_effectshader-shader_opt">util.post_effect(shader, shader_opt)</a></li>
 <li><a href="#utilosc_mapperrouting_table">util.osc_mapper(routing_table)</a></li>
 <li><a href="#utildata_mapperrouting_table">util.data_mapper(routing_table)</a></li>
 <li><a href="#video-utilvideoplayerfilename-opt_table">video = util.videoplayer(filename, [opt_table])</a><ul>
@@ -296,6 +299,17 @@ language</a>.</p>
 <li><a href="#path">PATH</a></li>
 <li><a href="#contents">CONTENTS</a></li>
 <li><a href="#childs">CHILDS</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#faq">FAQ</a><ul>
+<li><a href="#usage">Usage</a><ul>
+<li><a href="#is-it-possible-to-run-the-info-beamer-in-fullscreen-mode">Is it possible to run the <code>info-beamer</code> in fullscreen mode?</a></li>
+<li><a href="#port-4444-is-already-in-use-how-can-i-use-another-port">Port 4444 is already in use. How can I use another port?</a></li>
+<li><a href="#how-can-fetch-content-from-http">How can fetch content from HTTP?</a></li>
+<li><a href="#can-i-use-existing-lua-code-or-libraries">Can I use existing lua code or libraries?</a></li>
+<li><a href="#lua-sucks-why-not-javascriptpythonother-language-of-your-choice">Lua sucks! Why not Javascript/Python/other language of your choice?</a></li>
 </ul>
 </li>
 </ul>
@@ -959,9 +973,36 @@ can use <code>auto_loader</code> like this:</p>
 </pre></div>
 
 
+<p><code>util.auto_loader</code> autoloads files before returning and watches for changes
+afterwards.</p>
+<h3 id="utilfile_watchfilename-handler">util.file_watch(filename, handler)</h3>
+<p>Registers a handler that watches a file. The handler will be called once
+after calling <code>util.file_watch</code> and every time the file changes. The
+handler will receive the content of the file as a string. </p>
+<p><code>util.file_watch</code> can for example be used the keep variables in sync with a
+config file:</p>
+<div class="codehilite"><pre><span class="n">util</span><span class="p">.</span><span class="n">file_watch</span><span class="p">(</span><span class="s2">&quot;</span><span class="s">banner.txt&quot;</span><span class="p">,</span> <span class="n">function</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">content</span>
+<span class="k">end</span><span class="p">)</span>
+
+<span class="k">function</span> <span class="nc">node</span><span class="p">.</span><span class="nf">render</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+<span class="k">end</span>
+</pre></div>
+
+
 <h3 id="utilshaderpair_loaderbasename">util.shaderpair_loader(basename)</h3>
 <p>Loads the vertex and fragment shader from two files called <code>basename.vert</code>
 and <code>basename.frag</code> and returns a shader objects.</p>
+<h3 id="utilset_intervalinterval-callback">util.set_interval(interval, callback)</h3>
+<p>Adds a callback that will be called immediatelly and then each <code>interval</code>
+seconds if possible. The <code>callback</code> will only be called if the node is
+rendered: So it must be either the toplevel node of a node rendered with
+<code>resource.render_child</code>.</p>
+<h3 id="utilpost_effectshader-shader_opt">util.post_effect(shader, shader_opt)</h3>
+<p>Applies a shader effect to the current node output. This works by
+snapshotting the current output using <code>resource.create_snapshot</code>, clearing
+the output and drawing the snapshot with the given shader and its options.</p>
 <h3 id="utilosc_mapperrouting_table">util.osc_mapper(routing_table)</h3>
 <p>Will create a OSC mapper that makes if simple to dispatch OSC messages to
 different functions. Think of it as Url-routing for OSC messages:</p>
@@ -1029,6 +1070,52 @@ last change.</p>
 <p>Table of child nodes. The key contains the childs name. These can the
 rendered using <code>resource.render_child</code>. The value is a timestamp
 (comparable to <code>sys.now()</code>) of the first detection of the child node.</p>
+<h1 id="faq">FAQ</h1>
+<h2 id="usage">Usage</h2>
+<h3 id="is-it-possible-to-run-the-info-beamer-in-fullscreen-mode">Is it possible to run the <code>info-beamer</code> in fullscreen mode?</h3>
+<p>Yes. Just define the environment variable <code>INFOBEAMER_FULLSCREEN</code> to any
+non-empty value.</p>
+<div class="codehilite"><pre><span class="gp">user:~$</span> <span class="nv">INFOBEAMER_FULLSCREEN</span><span class="o">=</span>1 info-beamer xyz
+</pre></div>
+
+
+<h3 id="port-4444-is-already-in-use-how-can-i-use-another-port">Port 4444 is already in use. How can I use another port?</h3>
+<p>Set the environment variable <code>INFOBEAMER_PORT</code>. The specified port will be
+used for both TCP and UDP.</p>
+<h3 id="how-can-fetch-content-from-http">How can fetch content from HTTP?</h3>
+<p>You can't do that from within your node code. <code>info-beamer</code> doesn't support
+HTTP and likely never will, since there is a better way to do this: Just
+use an external program of you choice to do the HTTP requests. Then write
+the result into files within the nodes directory. The node can then pickup
+these files to display them.</p>
+<p>This also makes the node stateless: Since the files are persisted in the
+filesystem, restarting the <code>info-beamer</code> won't lose any information.</p>
+<h3 id="can-i-use-existing-lua-code-or-libraries">Can I use existing lua code or libraries?</h3>
+<p>Maybe. The Lua environment that is provided for a node is sandboxed. All
+potentially harmful functions (like <code>os.execute</code>) have been removed. </p>
+<p><code>require</code> has been wrapped to only load lua modules from the current
+directory. Most simple lua modules should work out of the box. Here is a
+JSON example:</p>
+<p>Download the <a href="https://raw.github.com/luaforge/json/master/json4lua/json/json.lua">JSON
+module</a>
+and put in your node directory. From within you node code you can then
+<code>require</code> this module, just as you would in normal lua code:</p>
+<div class="codehilite"><pre><span class="n">json</span> <span class="o">=</span> <span class="nb">require</span> <span class="s2">&quot;</span><span class="s">json&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="p">.</span><span class="n">encode</span><span class="p">{</span><span class="n">foo</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="s">bar})</span>
+</pre></div>
+
+
+<p>Native modules or precompiled modules cannot be loaded.</p>
+<h3 id="lua-sucks-why-not-javascriptpythonother-language-of-your-choice">Lua sucks! Why not Javascript/Python/other language of your choice?</h3>
+<p>Lua is a fast. This is important, since the function <code>node.render</code> is
+called for each frame. Lua is small and simple. If you did any programming
+in another language, you should be able to learn the lua basics in a few
+hours. </p>
+<p>Lua can be sandboxed. Memory and CPU usage can be restricted.  Multiple Lua
+environments (one for each node) can be created. This isolates nodes from
+each other and provides a clean environment to develop your code. If your
+node runs on your machine, you can be sure it'll run on any other
+<code>info-beamer</code>.</p>
 <h1 id="contributing">Contributing</h1>
 <p>Thanks for your interest in <code>info-beamer</code>. <code>info-beamer</code> tries to be a
 simple framework for building interactive realtime presentations. Lets keep
