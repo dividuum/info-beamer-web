@@ -308,8 +308,9 @@ language</a>.</p>
 <li><a href="#is-it-possible-to-run-the-info-beamer-in-fullscreen-mode">Is it possible to run the <code>info-beamer</code> in fullscreen mode?</a></li>
 <li><a href="#port-4444-is-already-in-use-how-can-i-use-another-port">Port 4444 is already in use. How can I use another port?</a></li>
 <li><a href="#how-can-fetch-content-from-http">How can fetch content from HTTP?</a></li>
-<li><a href="#can-i-use-existing-lua-code-or-libraries">Can I use existing lua code or libraries?</a></li>
+<li><a href="#can-i-use-existing-lua-code-or-libraries">Can I use existing Lua code or libraries?</a></li>
 <li><a href="#lua-sucks-why-not-javascriptpythonother-language-of-your-choice">Lua sucks! Why not Javascript/Python/other language of your choice?</a></li>
+<li><a href="#where-is-the-windowsosx-version">Where is the Windows/OSX version?</a></li>
 </ul>
 </li>
 </ul>
@@ -856,7 +857,7 @@ node. The <code>path</code> is the full path to the node from the toplevel node.
 <code>node.alias</code>, you can give your node an alias name. This name must be
 unique in a running <code>info-beamer</code> instance.</p>
 <h3 id="nodeeventevent_name-event_handler">node.event(event_name, event_handler)</h3>
-<p>Registers a new eventhandler. Possible <code>event_name</code>s are described below.
+<p>Registers a new event handler. Possible <code>event_name</code>s are described below.
 Event handlers cannot be unregistered. Event handlers will be called in the
 order of registration.</p>
 <h2 id="node-events">Node Events</h2>
@@ -919,6 +920,14 @@ greeted by a welcome line and are expected to provide a node name.
 <code>info-beamer</code> will return <code>ok!</code> if you provide a valid node name. From this
 moment on, <code>info-beamer</code> will feed you the output of the node. This can be
 used for debugging a node from remote.</p>
+<div class="codehilite"><pre><span class="gp">user:~$</span> telnet localhost 4444
+<span class="go">Info Beamer 0.2-beta.fdd72a (http://info-beamer.org/). Select your channel!</span>
+<span class="go">nested/child</span>
+<span class="go">ok!</span>
+<span class="go">[node output]</span>
+</pre></div>
+
+
 <p>Any text you type while connected will trigger the <code>input</code> event. The
 <code>input</code> event will be given the provided line. This can be used to feed a
 node with input from outside sources.</p>
@@ -1090,16 +1099,16 @@ the result into files within the nodes directory. The node can then pickup
 these files to display them.</p>
 <p>This also makes the node stateless: Since the files are persisted in the
 filesystem, restarting the <code>info-beamer</code> won't lose any information.</p>
-<h3 id="can-i-use-existing-lua-code-or-libraries">Can I use existing lua code or libraries?</h3>
+<h3 id="can-i-use-existing-lua-code-or-libraries">Can I use existing Lua code or libraries?</h3>
 <p>Maybe. The Lua environment that is provided for a node is sandboxed. All
 potentially harmful functions (like <code>os.execute</code>) have been removed. </p>
-<p><code>require</code> has been wrapped to only load lua modules from the current
-directory. Most simple lua modules should work out of the box. Here is a
+<p><code>require</code> has been wrapped to only load Lua modules from the current
+directory. Most simple Lua modules should work out of the box. Here is a
 JSON example:</p>
 <p>Download the <a href="https://raw.github.com/luaforge/json/master/json4lua/json/json.lua">JSON
 module</a>
-and put in your node directory. From within you node code you can then
-<code>require</code> this module, just as you would in normal lua code:</p>
+and put in your node directory. From within your node code you can then
+<code>require</code> this module, just as you would in normal Lua code:</p>
 <div class="codehilite"><pre><span class="n">json</span> <span class="o">=</span> <span class="nb">require</span> <span class="s2">&quot;</span><span class="s">json&quot;</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="p">.</span><span class="n">encode</span><span class="p">{</span><span class="n">foo</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="s">bar})</span>
 </pre></div>
@@ -1109,13 +1118,20 @@ and put in your node directory. From within you node code you can then
 <h3 id="lua-sucks-why-not-javascriptpythonother-language-of-your-choice">Lua sucks! Why not Javascript/Python/other language of your choice?</h3>
 <p>Lua is a fast. This is important, since the function <code>node.render</code> is
 called for each frame. Lua is small and simple. If you did any programming
-in another language, you should be able to learn the lua basics in a few
+in another language, you should be able to learn the Lua basics in a few
 hours. </p>
 <p>Lua can be sandboxed. Memory and CPU usage can be restricted.  Multiple Lua
 environments (one for each node) can be created. This isolates nodes from
 each other and provides a clean environment to develop your code. If your
 node runs on your machine, you can be sure it'll run on any other
 <code>info-beamer</code>.</p>
+<p>External scripting is an important part of the <code>info-beamer</code>. It's
+perfectly valid to do part of your nodes logic in an external script (for
+example to fetch data from twitter), write the data to a file and
+use the <code>info-beamer</code> to visualize the content. Instead of files you can
+also use UDP, OSC or TCP to update you node from any language.</p>
+<h3 id="where-is-the-windowsosx-version">Where is the Windows/OSX version?</h3>
+<p>There is none. The <code>info-beamer</code> is currently linux only.</p>
 <h1 id="contributing">Contributing</h1>
 <p>Thanks for your interest in <code>info-beamer</code>. <code>info-beamer</code> tries to be a
 simple framework for building interactive realtime presentations. Lets keep
