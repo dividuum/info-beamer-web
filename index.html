@@ -5,9 +5,15 @@
     <style>
       body {
         background-color: #FFF;
+        margin: 30px 0 0;
+        font-family: 'Gudea', sans-serif;
       }
       h1 {
         font-size: 40px;
+      }
+      h2 {
+        font-size: 60px;
+        margin: 50px 0;
       }
       h3 {
         font-size: 30px;
@@ -18,10 +24,6 @@
       #fork {
         z-index: 10;
         position: absolute; top: 0; right: 0; border: 0;
-      }
-      #intro {
-        width: 650px;
-        margin: 10px auto 60px auto;
       }
       #download {
         position: absolute;
@@ -67,10 +69,36 @@
         background-image: -webkit-linear-gradient(#0770a0,#0ca6dd);
         -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#0770a0',endColorstr='#0ca6dd')";
       }
-      #page {
+      #top {
         width: 820px;
+        margin: 0 auto 80px;
+      }
+      #features {
+        border-top: 5px solid #EEE;
+        border-bottom: 5px solid #A0A0EE;
+        background-color: #E0E0FF;
         margin: auto;
-        font-family: 'Gudea', sans-serif;
+      }
+      #intro {
+        width: 650px;
+        margin: 10px auto;
+      }
+      #screenshots {
+        background-color: black;
+        border-bottom: 5px solid #888;
+        padding: 20px 0;
+      }
+      #screenshots h2 {
+        color: #FFF;
+      }
+      #bottom {
+        padding: 20px 0 50px;
+        background-color: #FFF;
+        font-size: 13px;
+      }
+      #bottom img {
+        position: relative;
+        top: 4px;
       }
       .left {
         width: 320px;
@@ -81,18 +109,12 @@
         float: left;
       }
       .row {
+        width: 820px;
+        margin: auto;
         height: 320px;
       }
       .centered {
         text-align: center;
-      }
-      #bottom {
-        margin-bottom: 100px;
-        font-size: 13px;
-      }
-      #bottom img {
-        position: relative;
-        top: 4px;
       }
       pre {
         margin: 0;
@@ -106,11 +128,11 @@
       }
       .codehilite { 
         background-color: #DDD;
-        padding: 15px 20px;
+        padding: 15px 15px;
         font-size: 16px;
         border: 1px solid black;
         border-radius: 5px;
-        width: 600px;
+        width: 520px;
         margin: auto;
       }
       .codehilite .s { color: #AA3300 } /* Literal.String */
@@ -118,6 +140,7 @@
       .codehilite .k { color: #006699; font-weight: bold } /* Keyword */
       .codehilite .s2 { color: #CC3300 } /* Literal.String.Double */
       .codehilite .mi { color: #008800 } /* Literal.Number.Integer */
+      #example{ vertical-align: top; }
     </style>
     <script type="text/javascript">
       var _gaq = _gaq || [];
@@ -133,13 +156,22 @@
   </head>
   <body>
     <a href="http://github.com/dividuum/info-beamer"><img id='fork' src="fork.png" alt="Fork me on GitHub"></a>
-    <div id='page'>
+    <div id='top'>
       <div id='logo'>
         <img src='beamer.png' alt='Info Beamer!'>
         <a href='http://github.com/dividuum/info-beamer' id='download'>Get it on GitHub</a>
       </div>
+      <h1 class='centered'>The Multimedia Presenter for Lua</h1>
+        <p>
+          <b>info-beamer</b> allows you to rapidly prototype interactive multimedia
+          presentations using the Lua programming language.  <b>info-beamer</b> treats a
+          directory as a presentable unit. A directory (called a node)
+          consists of resource files (images, videos, fonts or shaders) and
+          a control script called node.lua. Read more in the <a href='/doc/'>documentation</a> or see
+          some <a href='#screenshots'>screenshots of info-beamer in action</a>.
+        </p>
       <div>
-        <h1 class='centered'>The Interactive Multimedia Presenter for Lua</h1>
+        <table><tr><td id='example'><br/>
 <!-- hello world -->
 <div class="codehilite"><pre><span class="n">gl</span><span class="p">.</span><span class="n">setup</span><span class="p">(</span><span class="mi">1024</span><span class="p">,</span> <span class="mi">768</span><span class="p">)</span>
 
@@ -150,20 +182,15 @@
 <span class="k">end</span>
 </pre></div>
 <!-- hello world -->
+            See the <a href='/doc/#first-steps'>documentation<a/> for more examples.
+          </td><td id='hello'>
+            <img src='hello.png'>
+        </td></tr></table>
       </div>
-      <div id='intro'>
-        <p>
-          <b>info-beamer</b> allows you to rapidly prototype interactive multimedia
-          presentations using the Lua programming language.  <b>info-beamer</b> treats a
-          directory as a presentable unit. A directory (called a node)
-          consists of resource files (images, movies, fonts or shaders) and
-          a control script called node.lua. Read more in the <a href='doc/'>documentation</a>.
-        </p>
-        <h3>Screenshots</h3>
-        <div class='centered'>
-          <a href='http://imgur.com/a/VA0B1'><img src='screenshots.jpg'></a><br/><br/>
-          Example visualizations created for an upcoming <a href='https://entropia.de/GPN12'>event</a> in Karlsruhe, Germany.
-        </div>
+    </div>
+    <div id='features'>
+      <div id='intro' class='centered'>
+        <h2>Why <b>info-beamer</b>?</h2>
       </div>
       <div class='row'>
         <div class='left'>
@@ -179,8 +206,8 @@
 
             <ul>
               <li><b>info-beamer</b> uses the linux inotify API to detect changed files or directories.
-              <li>You never have to restart <b>info-beamer</b> to see changes you made. <b>info-beamer</b> can reload
-                  updated files for you.
+              <li>You never have to restart <b>info-beamer</b> to see changes you made. <b>info-beamer</b> can 
+                  <a href='/doc/#utilresource95loadertable95of95filenames'>reload updated files</a> for you.
             </ul>
           </p>
         </div>
@@ -200,8 +227,9 @@
 
             <ul>
               <li>Allows you to create a toplevel node that switches between child nodes.
-              <li>Nodes can be developed independently and later composed into one
-                  presentation.
+              <li>Nodes can be developed independently and later 
+                  <a href='/doc/#rendering-child-nodes'>composed into one presentation</a>.
+              <li>Include remote content using the <a href='/doc/#vnc-resourcecreate95vnchostname-port'>VNC client</a>.
             </ul>
           </p>
         </div>
@@ -220,7 +248,8 @@
             running code.
 
             <ul>
-              <li>Simple UDP protocol and OSC protocol support.
+              <li>Simple <a href='/doc/#nodeeventdata-functiondata-suffix-end'>UDP protocol</a>
+                  and <a href='/doc/#nodeeventosc-functionsuffix-end'>OSC protocol</a> support.
               <li>Let <b>info-beamer</b> display a directory shared using Dropbox. Since <b>info-beamer</b> will
                   detect any changes to the directory, this will allow you
                   to update your presentation from remote.
@@ -240,8 +269,8 @@
             Full shader support using GLSL.
 
             <ul>
-              <li>Load vertex and fragment shaders.
-              <li>Control your shaders with dynamic uniform values.
+              <li>Load <a href='/doc/#shader-resourcecreate95shadervertex95shader-fragment95shader'>vertex and fragment shaders</a>.
+              <li>Control your shaders with <a href='/doc/#shaderusetable95of95shader95variables'>dynamic uniform values</a>.
               <li>Feed your shaders with textures from images, videos, 
                   child nodes or even VNC connections.
             </ul>
@@ -260,10 +289,11 @@
             supported using the powerful libav library.
 
             <ul>
-              <li>Image loading is provided by DevIL.
-              <li>Video playback is powered by libav. It should play most video 
+              <li><a href='/doc/#image-resourceload95imagefilename'>Image loading</a> is provided by DevIL.
+              <li><a href='/doc/#videos'>Video playback</a> is powered by libav. It should play most video 
                   files you might have.
               <li>Use Shaders in the GLSL language.
+              <li>Full <a href='/doc/#font-resourceload95fontfilename'>Truetype font support</a> using freetype.
             </ul>
           </p>
         </div>
@@ -281,7 +311,7 @@
             <b>info-beamer</b> to be truly rapid:
 
             <ul>
-              <li>Update the running code in realtime. There is no need to restart <b>info-beamer</b>.
+              <li><a href='/doc/#node-events'>Update the running code</a> in realtime. There is no need to restart <b>info-beamer</b>.
               <li>Lua is a simple language. If you have basic programming experience, 
                   you'll learn Lua in a few hours.
             </ul>
@@ -295,24 +325,26 @@
         <div class='right'>
           <h3>Opensource</h3>
           <p>
-
             <b>info-beamer</b> is opensource software release under the BSD
-            2-clause license.  Use and modify the software as you like.
-
+            2-clause license. <a href='https://github.com/dividuum/info-beamer'>Use and modify</a> the software as you like.
           </p>
         </div>
       </div>
-      <hr/>
-      <div id='bottom' class='centered'>
-        A project by 
-        <img src='http://www.gravatar.com/avatar/1da51a03b64d071a4a0f0cf7daf15c4c?s=20'>
-        Florian Wesch. Contact me at
-        <a href='mailto:hello@info-beamer.org'>hello@info-beamer.org</a> or visit my website at
-        <a href='http://dividuum.de/'>dividuum.de</a>.
-        <br/>
-        <div class='light'>
-          Icons where taken from the <a href='http://schollidesign.deviantart.com/art/Human-O2-Iconset-105344123'>Human O2 Iconset</a>.
-        </div>
+    </div>
+    <div id='screenshots' class='centered'>
+      <a name='screenshots'></a>
+      <h2>Screenshots</h2>
+      <iframe class="imgur-album" width="820" height="550" frameborder="0" src="http://imgur.com/a/VA0B1/embed"></iframe>
+    </div>
+    <div id='bottom' class='centered'>
+      A project by 
+      <img src='http://www.gravatar.com/avatar/1da51a03b64d071a4a0f0cf7daf15c4c?s=20'>
+      Florian Wesch. Contact me at
+      <a href='mailto:hello@info-beamer.org'>hello@info-beamer.org</a> or visit my website at
+      <a href='http://dividuum.de/'>dividuum.de</a>.
+      <br/>
+      <div class='light'>
+        Icons where taken from the <a href='http://schollidesign.deviantart.com/art/Human-O2-Iconset-105344123'>Human O2 Iconset</a>.
       </div>
     </div>
   </body>

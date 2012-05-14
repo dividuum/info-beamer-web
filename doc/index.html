@@ -210,36 +210,36 @@ language</a>.</p>
 </li>
 <li><a href="#reference">Reference</a><ul>
 <li><a href="#resource-loading">Resource Loading</a><ul>
-<li><a href="#image-resourceload_imagefilename">image = resource.load_image(filename)</a><ul>
+<li><a href="#image-resourceload95imagefilename">image = resource.load_image(filename)</a><ul>
 <li><a href="#imagedrawx1-y1-x2-y2">image:draw(x1, y1, x2, y2)</a></li>
 <li><a href="#width-height-imagesize">width, height = image:size()</a></li>
 </ul>
 </li>
-<li><a href="#video-resourceload_videofilename">video = resource.load_video(filename)</a><ul>
+<li><a href="#video-resourceload95videofilename">video = resource.load_video(filename)</a><ul>
 <li><a href="#videodrawx1-y1-x2-y2">video:draw(x1, y1, x2, y2)</a></li>
-<li><a href="#has_next_frame-videonext">has_next_frame = video:next()</a></li>
+<li><a href="#has95next95frame-videonext">has_next_frame = video:next()</a></li>
 <li><a href="#width-height-videosize">width, height = video:size()</a></li>
 <li><a href="#fps-videofps">fps = video:fps()</a></li>
 </ul>
 </li>
-<li><a href="#font-resourceload_fontfilename">font = resource.load_font(filename)</a><ul>
+<li><a href="#font-resourceload95fontfilename">font = resource.load_font(filename)</a><ul>
 <li><a href="#width-fontwritex-y-text-size-r-g-b-a">width = font:write(x, y, text, size, r, g, b, [a])</a></li>
 <li><a href="#width-fontwritex-y-text-size-texturelike">width = font:write(x, y, text, size, texturelike)</a></li>
 </ul>
 </li>
-<li><a href="#string-resourceload_filefilename">string = resource.load_file(filename)</a></li>
-<li><a href="#shader-resourcecreate_shadervertex_shader-fragment_shader">shader = resource.create_shader(vertex_shader, fragment_shader)</a><ul>
-<li><a href="#shaderusetable_of_shader_variables">shader:use(table_of_shader_variables)</a></li>
+<li><a href="#string-resourceload95filefilename">string = resource.load_file(filename)</a></li>
+<li><a href="#shader-resourcecreate95shadervertex95shader-fragment95shader">shader = resource.create_shader(vertex_shader, fragment_shader)</a><ul>
+<li><a href="#shaderusetable95of95shader95variables">shader:use(table_of_shader_variables)</a></li>
 <li><a href="#shaderdeactivate">shader:deactivate()</a></li>
 </ul>
 </li>
-<li><a href="#vnc-resourcecreate_vnchostname-port">vnc = resource.create_vnc(hostname, [port])</a><ul>
+<li><a href="#vnc-resourcecreate95vnchostname-port">vnc = resource.create_vnc(hostname, [port])</a><ul>
 <li><a href="#vncdrawx1-y1-x2-y2">vnc:draw(x1, y1, x2, y2)</a></li>
 <li><a href="#width-height-vncsize">width, height = vnc:size()</a></li>
 <li><a href="#alive-vncalive">alive = vnc:alive()</a></li>
 </ul>
 </li>
-<li><a href="#image-resourcerender_childname">image = resource.render_child(name)</a></li>
+<li><a href="#image-resourcerender95childname">image = resource.render_child(name)</a></li>
 <li><a href="#image-resourcecreate_snapshot">image = resource.create_snapshot()</a></li>
 </ul>
 </li>
@@ -262,33 +262,33 @@ language</a>.</p>
 <li><a href="#node-functions">Node Functions</a><ul>
 <li><a href="#noderender">node.render()</a></li>
 <li><a href="#nodealiasnew_alias">node.alias(new_alias)</a></li>
-<li><a href="#nodeeventevent_name-event_handler">node.event(event_name, event_handler)</a></li>
+<li><a href="#nodeeventevent95name-event95handler">node.event(event_name, event_handler)</a></li>
 </ul>
 </li>
 <li><a href="#node-events">Node Events</a><ul>
-<li><a href="#nodeeventchild_add-functionchild_name-end">node.event("child_add", function(child_name) ... end)</a></li>
-<li><a href="#nodeeventchild_remove-functionchild_name-end">node.event("child_remove", function(child_name) ... end)</a></li>
-<li><a href="#nodeeventcontent_update-functionfilename-end">node.event("content_update", function(filename) ... end)</a></li>
-<li><a href="#nodeeventcontent_remove-functionfilename-end">node.event("content_remove", function(filename) ... end)</a></li>
+<li><a href="#nodeeventchild95add-functionchild95name-end">node.event("child_add", function(child_name) ... end)</a></li>
+<li><a href="#nodeeventchild95remove-functionchild95name-end">node.event("child_remove", function(child_name) ... end)</a></li>
+<li><a href="#nodeeventcontent95update-functionfilename-end">node.event("content_update", function(filename) ... end)</a></li>
+<li><a href="#nodeeventcontent95remove-functionfilename-end">node.event("content_remove", function(filename) ... end)</a></li>
 <li><a href="#nodeeventdata-functiondata-suffix-end">node.event("data", function(data, suffix) ... end)</a></li>
 <li><a href="#nodeeventosc-functionsuffix-end">node.event("osc", function(suffix, ...) ... end)</a></li>
 <li><a href="#nodeeventinput-functionline-end">node.event("input", function(line) ... end)</a></li>
 </ul>
 </li>
 <li><a href="#utility-functions">Utility Functions</a><ul>
-<li><a href="#utilresource_loadertable_of_filenames">util.resource_loader(table_of_filenames)</a></li>
-<li><a href="#target-utilauto_loadertarget">target = util.auto_loader([target])</a></li>
-<li><a href="#utilfile_watchfilename-handler">util.file_watch(filename, handler)</a></li>
-<li><a href="#utilshaderpair_loaderbasename">util.shaderpair_loader(basename)</a></li>
-<li><a href="#utilset_intervalinterval-callback">util.set_interval(interval, callback)</a></li>
-<li><a href="#utilpost_effectshader-shader_opt">util.post_effect(shader, shader_opt)</a></li>
-<li><a href="#utilosc_mapperrouting_table">util.osc_mapper(routing_table)</a></li>
-<li><a href="#utildata_mapperrouting_table">util.data_mapper(routing_table)</a></li>
-<li><a href="#video-utilvideoplayerfilename-opt_table">video = util.videoplayer(filename, [opt_table])</a><ul>
+<li><a href="#utilresource95loadertable95of95filenames">util.resource_loader(table_of_filenames)</a></li>
+<li><a href="#target-utilauto95loadertarget">target = util.auto_loader([target])</a></li>
+<li><a href="#utilfile95watchfilename-handler">util.file_watch(filename, handler)</a></li>
+<li><a href="#utilshaderpair95loaderbasename">util.shaderpair_loader(basename)</a></li>
+<li><a href="#utilset95intervalinterval-callback">util.set_interval(interval, callback)</a></li>
+<li><a href="#utilpost95effectshader-shader_opt">util.post_effect(shader, shader_opt)</a></li>
+<li><a href="#utilosc95mapperrouting95table">util.osc_mapper(routing_table)</a></li>
+<li><a href="#utildata95mapperrouting95table">util.data_mapper(routing_table)</a></li>
+<li><a href="#video-utilvideoplayerfilename-opt95table">video = util.videoplayer(filename, [opt_table])</a><ul>
 <li><a href="#videodrawx1-y1-x2-y2_1">video:draw(x1, y1, x2, y2)</a></li>
 </ul>
 </li>
-<li><a href="#utildraw_correctobj-x1-y1-x2-y2-alpha">util.draw_correct(obj, x1, y1, x2, y2, alpha)</a></li>
+<li><a href="#utildraw95correctobj-x1-y1-x2-y2-alpha">util.draw_correct(obj, x1, y1, x2, y2, alpha)</a></li>
 <li><a href="#ppvariable">pp(variable)</a></li>
 </ul>
 </li>
@@ -305,7 +305,7 @@ language</a>.</p>
 </li>
 <li><a href="#faq">FAQ</a><ul>
 <li><a href="#usage">Usage</a><ul>
-<li><a href="#is-it-possible-to-run-the-info-beamer-in-fullscreen-mode">Is it possible to run the <code>info-beamer</code> in fullscreen mode?</a></li>
+<li><a href="#is-it-possible-to-run-the-info-beamer-in-fullscreen-mode">Is it possible to run the info-beamer in fullscreen mode?</a></li>
 <li><a href="#port-4444-is-already-in-use-how-can-i-use-another-port">Port 4444 is already in use. How can I use another port?</a></li>
 <li><a href="#how-can-fetch-content-from-http">How can fetch content from HTTP?</a></li>
 <li><a href="#can-i-use-existing-lua-code-or-libraries">Can I use existing Lua code or libraries?</a></li>
@@ -371,19 +371,19 @@ compiling <code>info-beamer</code>. Here are the required 3rd party packages:</p
 </tr>
 <tr>
 <td>libavcodec</td>
-<td />
+<td></td>
 </tr>
 <tr>
 <td>libavutil</td>
-<td />
+<td></td>
 </tr>
 <tr>
 <td>libswscale</td>
-<td />
+<td></td>
 </tr>
 <tr>
 <td>libz</td>
-<td />
+<td></td>
 </tr>
 <tr>
 <td>markdown (python)</td>
@@ -478,8 +478,7 @@ screen.  <code>100</code> is the size of the output in screen units. <code>1,1,1
 color in RGBA format (a bright white).</p>
 <p>To display this example using <code>info-beamer</code>, switch into the <code>samples</code>
 directory and type </p>
-<div class="codehilite"><pre><span class="gp">user:~/src/info-beamer$</span> <span class="nb">cd </span>samples
-<span class="gp">user:~/src/info-beamer/samples$</span> ../info-beamer hello
+<div class="codehilite"><pre><span class="gp">user:~/src/info-beamer$</span> ./info-beamer samples/hello
 </pre></div>
 
 
@@ -552,12 +551,12 @@ correct framerate.</p>
 <h3 id="rendering-child-nodes">Rendering Child Nodes</h3>
 <p>A directory (called a node) can contain subdirectories. Each subdirectory
 is then loaded as a child node. The parent node can render child nodes like
-any other resource. Let's say we create two nodes called <em>Blue</em> and <em>Red</em>.
+any other resource. Let's say we create two nodes called <code>blue</code> and <code>red</code>.
 We can let <code>info-beamer</code> play each of them individually. But what if we
 want to combine them for our presentation? This is where the nesting
 feature of <code>info-beamer</code> becomes useful. You start by creating another node
-called <em>Green</em>. Then you just move the directories for node <em>Blue</em> and
-<em>Red</em> into the directory <em>Green</em>. The file tree will the look like this:</p>
+called <code>green</code>. Then you just move the directories for node <code>blue</code> and
+<code>red</code> into the directory <code>green</code>. The file tree will the look like this:</p>
 <div class="codehilite"><pre>-+- green -+- node.lua
            |
            +- red ---- node.lua
@@ -566,8 +565,8 @@ called <em>Green</em>. Then you just move the directories for node <em>Blue</em>
 </pre></div>
 
 
-<p>Inside of <em>Green</em> you can then render both <em>Red</em> and <em>Blue</em> into an image
-object using <code>resource.render_child</code> and display them on <em>Green</em>s virtual screen.</p>
+<p>Inside of <code>green</code> you can then render both <code>red</code> and <code>blue</code> into an image
+object using <code>resource.render_child</code> and display them on <code>green</code>s virtual screen.</p>
 <p><img alt="nested rendering" src="nested.png" /></p>
 <p>The above setup is available in the directory <code>samples/green</code>. It contains
 <code>node.lua</code> and two child directories called <code>red</code> and <code>blue</code>.  Let's look at
@@ -700,7 +699,7 @@ which depends on a time value.  Finally, we draw <code>lua.png</code> with the
 applied shader. This will create a dynamic effect.</p>
 <h1 id="reference">Reference</h1>
 <h2 id="resource-loading">Resource Loading</h2>
-<h3 id="image-resourceload_imagefilename">image = resource.load_image(filename)</h3>
+<h3 id="image-resourceload95imagefilename">image = resource.load_image(filename)</h3>
 <p>Loads the image file specified by <code>filename</code> into a texture object.
 Please note that image loading is case sensitive. <code>info-beamer</code> supports
 most common file formats.</p>
@@ -709,19 +708,19 @@ most common file formats.</p>
 <p>Draws the image into a rectangle specified by the give coordinates.</p>
 <h4 id="width-height-imagesize">width, height = image:size()</h4>
 <p>Returns the size of the image.</p>
-<h3 id="video-resourceload_videofilename">video = resource.load_video(filename)</h3>
+<h3 id="video-resourceload95videofilename">video = resource.load_video(filename)</h3>
 <p>Loads any supported video file and returns a 
 <code>video</code> object. The <code>video</code> objects supports the following methods:</p>
 <h4 id="videodrawx1-y1-x2-y2">video:draw(x1, y1, x2, y2)</h4>
 <p>Draws the current video frame into a rectangle specified by the give coordinates.</p>
-<h4 id="has_next_frame-videonext">has_next_frame = video:next()</h4>
+<h4 id="has95next95frame-videonext">has_next_frame = video:next()</h4>
 <p>Decodes the next frame of the video. Returns true, if a frame was decoded
 or false if there was no next frame.</p>
 <h4 id="width-height-videosize">width, height = video:size()</h4>
 <p>Returns the size of the video.</p>
 <h4 id="fps-videofps">fps = video:fps()</h4>
 <p>Returns the frame per seconds as specified by the video file.</p>
-<h3 id="font-resourceload_fontfilename">font = resource.load_font(filename)</h3>
+<h3 id="font-resourceload95fontfilename">font = resource.load_font(filename)</h3>
 <p>Loads the given Truetype font file and returns a <code>font</code> object. It
 supports the following methods:</p>
 <h4 id="width-fontwritex-y-text-size-r-g-b-a">width = font:write(x, y, text, size, r, g, b, [a])</h4>
@@ -736,13 +735,13 @@ ascii range.</p>
 texturelike object. <code>texturelike</code> can be an image, a video or any other
 <code>texturelike</code> objects. The texture will be used for each character
 individually.</p>
-<h3 id="string-resourceload_filefilename">string = resource.load_file(filename)</h3>
+<h3 id="string-resourceload95filefilename">string = resource.load_file(filename)</h3>
 <p>Will load the content of the specified file into a string value.
 At most 16kb (16384 bytes) are readable.</p>
-<h3 id="shader-resourcecreate_shadervertex_shader-fragment_shader">shader = resource.create_shader(vertex_shader, fragment_shader)</h3>
+<h3 id="shader-resourcecreate95shadervertex95shader-fragment95shader">shader = resource.create_shader(vertex_shader, fragment_shader)</h3>
 <p>Will create a new <code>shader</code> object. <code>vertex_shader</code> and <code>fragment_shader</code>
 are strings containing the shaders in the GLSL language.</p>
-<h4 id="shaderusetable_of_shader_variables">shader:use(table_of_shader_variables)</h4>
+<h4 id="shaderusetable95of95shader95variables">shader:use(table_of_shader_variables)</h4>
 <p>Will activate the shader and pass in the given variables. A call might look
 like this:</p>
 <div class="codehilite"><pre><span class="n">shader</span><span class="p">:</span><span class="n">use</span><span class="p">{</span>
@@ -768,7 +767,7 @@ will be available as a 2d sampler:</p>
 call unless deactivated using <code>:deactivate</code>.</p>
 <h4 id="shaderdeactivate">shader:deactivate()</h4>
 <p>Deactivates the active shader.</p>
-<h3 id="vnc-resourcecreate_vnchostname-port">vnc = resource.create_vnc(hostname, [port])</h3>
+<h3 id="vnc-resourcecreate95vnchostname-port">vnc = resource.create_vnc(hostname, [port])</h3>
 <p>This call will create VNC client. It will connect to the specified address.
 The remote desktop will be available as a <code>texturelike</code> object. If no port
 is given, the default value of 5900 will be used.</p>
@@ -783,7 +782,7 @@ the server. If the client was disconnected (which can have various reasons
 like an invalid hostname, a closed connection or invalid VNC packets) it
 will not automatically reconnect. It's up to you to create a new client if
 you need a persistent connection.</p>
-<h3 id="image-resourcerender_childname">image = resource.render_child(name)</h3>
+<h3 id="image-resourcerender95childname">image = resource.render_child(name)</h3>
 <p>Renders a child node into an <code>image</code> object. Rendering will call
 <code>node.render</code> within the child.</p>
 <p>The returned <code>image</code> supports the same methods like images objects created
@@ -856,14 +855,14 @@ node. The <code>path</code> is the full path to the node from the toplevel node.
 <code>osc</code> and <code>data</code> events), you address the node using its full path. Using
 <code>node.alias</code>, you can give your node an alias name. This name must be
 unique in a running <code>info-beamer</code> instance.</p>
-<h3 id="nodeeventevent_name-event_handler">node.event(event_name, event_handler)</h3>
+<h3 id="nodeeventevent95name-event95handler">node.event(event_name, event_handler)</h3>
 <p>Registers a new event handler. Possible <code>event_name</code>s are described below.
 Event handlers cannot be unregistered. Event handlers will be called in the
 order of registration.</p>
 <h2 id="node-events">Node Events</h2>
 <p><code>info-beamer</code> allows you to listen to various events. All events must be
 registered using <code>node.event</code>. The following events are available:</p>
-<h3 id="nodeeventchild_add-functionchild_name-end">node.event("child_add", function(child_name) ... end)</h3>
+<h3 id="nodeeventchild95add-functionchild95name-end">node.event("child_add", function(child_name) ... end)</h3>
 <p>Registers an event handler that is called if <code>info-beamer</code> detects that a
 child node was added to the current node. The name of the new child node is
 provided in <code>child_name</code>. Example usage:</p>
@@ -873,15 +872,15 @@ provided in <code>child_name</code>. Example usage:</p>
 </pre></div>
 
 
-<h3 id="nodeeventchild_remove-functionchild_name-end">node.event("child_remove", function(child_name) ... end)</h3>
+<h3 id="nodeeventchild95remove-functionchild95name-end">node.event("child_remove", function(child_name) ... end)</h3>
 <p>Registers an event handler that is called if <code>info-beamer</code> detects that a
 child node was removed from the current node. The child name is provided in
 <code>child_name</code>.</p>
-<h3 id="nodeeventcontent_update-functionfilename-end">node.event("content_update", function(filename) ... end)</h3>
+<h3 id="nodeeventcontent95update-functionfilename-end">node.event("content_update", function(filename) ... end)</h3>
 <p>Registers an event handler that is called if <code>info-beamer</code> detects that a file was
 created or modified in the current node. This allows you to detect updated
 resources. </p>
-<h3 id="nodeeventcontent_remove-functionfilename-end">node.event("content_remove", function(filename) ... end)</h3>
+<h3 id="nodeeventcontent95remove-functionfilename-end">node.event("content_remove", function(filename) ... end)</h3>
 <p>Registers an event handler that is called if <code>info-beamer</code> detects that a
 file was removed from the current node.</p>
 <h3 id="nodeeventdata-functiondata-suffix-end">node.event("data", function(data, suffix) ... end)</h3>
@@ -940,7 +939,7 @@ node with input from outside sources.</p>
 <h2 id="utility-functions">Utility Functions</h2>
 <p>All utility functions could be rewritten using the functions decribed
 above. They are provided for your convenience.</p>
-<h3 id="utilresource_loadertable_of_filenames">util.resource_loader(table_of_filenames)</h3>
+<h3 id="utilresource95loadertable95of95filenames">util.resource_loader(table_of_filenames)</h3>
 <p>Creates a resource loader that will load the resources from the given
 filenames and put them in global variables. Example usage:</p>
 <div class="codehilite"><pre><span class="n">util</span><span class="p">.</span><span class="n">resource_loader</span><span class="p">{</span>
@@ -958,7 +957,7 @@ variable <code>font</code>. The global variable <code>image</code> will contain 
 And so on.</p>
 <p>The <code>util.resource_loader</code> will also detect changes to the files and reload
 them.</p>
-<h3 id="target-utilauto_loadertarget">target = util.auto_loader([target])</h3>
+<h3 id="target-utilauto95loadertarget">target = util.auto_loader([target])</h3>
 <p>Creates a resource loader that tries to automatically load all files found
 in the node's directory. It will put the loaded resources into the table
 given by <code>target</code>. If no table is provided, the <code>auto_loader</code> will create a
@@ -984,7 +983,7 @@ can use <code>auto_loader</code> like this:</p>
 
 <p><code>util.auto_loader</code> autoloads files before returning and watches for changes
 afterwards.</p>
-<h3 id="utilfile_watchfilename-handler">util.file_watch(filename, handler)</h3>
+<h3 id="utilfile95watchfilename-handler">util.file_watch(filename, handler)</h3>
 <p>Registers a handler that watches a file. The handler will be called once
 after calling <code>util.file_watch</code> and every time the file changes. The
 handler will receive the content of the file as a string. </p>
@@ -1000,19 +999,19 @@ config file:</p>
 </pre></div>
 
 
-<h3 id="utilshaderpair_loaderbasename">util.shaderpair_loader(basename)</h3>
+<h3 id="utilshaderpair95loaderbasename">util.shaderpair_loader(basename)</h3>
 <p>Loads the vertex and fragment shader from two files called <code>basename.vert</code>
 and <code>basename.frag</code> and returns a shader objects.</p>
-<h3 id="utilset_intervalinterval-callback">util.set_interval(interval, callback)</h3>
+<h3 id="utilset95intervalinterval-callback">util.set_interval(interval, callback)</h3>
 <p>Adds a callback that will be called immediatelly and then each <code>interval</code>
 seconds if possible. The <code>callback</code> will only be called if the node is
 rendered: So it must be either the toplevel node of a node rendered with
 <code>resource.render_child</code>.</p>
-<h3 id="utilpost_effectshader-shader_opt">util.post_effect(shader, shader_opt)</h3>
+<h3 id="utilpost95effectshader-shader_opt">util.post_effect(shader, shader_opt)</h3>
 <p>Applies a shader effect to the current node output. This works by
 snapshotting the current output using <code>resource.create_snapshot</code>, clearing
 the output and drawing the snapshot with the given shader and its options.</p>
-<h3 id="utilosc_mapperrouting_table">util.osc_mapper(routing_table)</h3>
+<h3 id="utilosc95mapperrouting95table">util.osc_mapper(routing_table)</h3>
 <p>Will create a OSC mapper that makes if simple to dispatch OSC messages to
 different functions. Think of it as Url-routing for OSC messages:</p>
 <div class="codehilite"><pre><span class="n">util</span><span class="p">.</span><span class="n">osc_mapper</span><span class="p">{</span>
@@ -1035,10 +1034,10 @@ trigger the slider callback function:</p>
 
 <p>In the callback, the argument <code>slider_num</code> will be a string containing the
 value <code>123</code> while <code>slider_arg1</code> will contain the first OSC argument.</p>
-<h3 id="utildata_mapperrouting_table">util.data_mapper(routing_table)</h3>
+<h3 id="utildata95mapperrouting95table">util.data_mapper(routing_table)</h3>
 <p>Provides the same functionality as the <code>osc_mapper</code>, but handles simple UDP
 packets.</p>
-<h3 id="video-utilvideoplayerfilename-opt_table">video = util.videoplayer(filename, [opt_table])</h3>
+<h3 id="video-utilvideoplayerfilename-opt95table">video = util.videoplayer(filename, [opt_table])</h3>
 <p>Provides a small wrapper around <code>resource.load_video</code>. Provides simplified
 playback of videos by handling framerate issues. <code>opt_table</code> is an optional
 table containing the key <code>loop</code>. It is a boolean value that indicates if
@@ -1046,7 +1045,7 @@ the videoplayer should loop the video.</p>
 <p><code>util.videoplayer</code> will return a <code>video</code> object that has the following method:</p>
 <h4 id="videodrawx1-y1-x2-y2_1">video:draw(x1, y1, x2, y2)</h4>
 <p>Draws the current video frame into a rectangle specified by the give coordinates.</p>
-<h3 id="utildraw_correctobj-x1-y1-x2-y2-alpha">util.draw_correct(obj, x1, y1, x2, y2, alpha)</h3>
+<h3 id="utildraw95correctobj-x1-y1-x2-y2-alpha">util.draw_correct(obj, x1, y1, x2, y2, alpha)</h3>
 <p>It is often necessary to display images, videos, child nodes or vnc streams
 using the correct aspect ratio (so they don't look stretched).
 <code>util.draw_correct</code> does this for you.</p>
@@ -1129,7 +1128,7 @@ node runs on your machine, you can be sure it'll run on any other
 perfectly valid to do part of your nodes logic in an external script (for
 example to fetch data from twitter), write the data to a file and
 use the <code>info-beamer</code> to visualize the content. Instead of files you can
-also use UDP, OSC or TCP to update you node from any language.</p>
+also use UDP, OSC or TCP to update your node from any language.</p>
 <h3 id="where-is-the-windowsosx-version">Where is the Windows/OSX version?</h3>
 <p>There is none. The <code>info-beamer</code> is currently linux only.</p>
 <h1 id="contributing">Contributing</h1>
