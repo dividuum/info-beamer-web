@@ -985,7 +985,7 @@ can use <code>auto_loader</code> like this:</p>
 afterwards.</p>
 <h3 id="utilfile95watchfilename-handler">util.file_watch(filename, handler)</h3>
 <p>Registers a handler that watches a file. The handler will be called once
-after calling <code>util.file_watch</code> and every time the file changes. The
+while calling <code>util.file_watch</code> and every time the file changes. The
 handler will receive the content of the file as a string. </p>
 <p><code>util.file_watch</code> can for example be used the keep variables in sync with a
 config file:</p>
@@ -1005,7 +1005,7 @@ and <code>basename.frag</code> and returns a shader objects.</p>
 <h3 id="utilset95intervalinterval-callback">util.set_interval(interval, callback)</h3>
 <p>Adds a callback that will be called immediatelly and then each <code>interval</code>
 seconds if possible. The <code>callback</code> will only be called if the node is
-rendered: So it must be either the toplevel node of a node rendered with
+rendered: So it must be either the toplevel node or a node rendered with
 <code>resource.render_child</code>.</p>
 <h3 id="utilpost95effectshader-shader_opt">util.post_effect(shader, shader_opt)</h3>
 <p>Applies a shader effect to the current node output. This works by
