@@ -339,7 +339,7 @@ compiling <code>info-beamer</code>. Here are the required 3rd party packages:</p
 <tbody>
 <tr>
 <td>lua (5.1)</td>
-<td>for scripting</td>
+<td>for scripting (Note: lua 5.2 is <em>not</em> supported)</td>
 </tr>
 <tr>
 <td>libevent (&gt;2.0)</td>
@@ -395,7 +395,7 @@ compiling <code>info-beamer</code>. Here are the required 3rd party packages:</p
 <p>Ubuntu provides all required packages. Just execute the following command:</p>
 <div class="codehilite"><pre><span class="gp">user:~$</span> apt-get install liblua5.1-dev libevent-dev libglfw-dev <span class="se">\</span>
 <span class="go">    libglew1.5-dev libftgl-dev libavcodec-dev libswscale-dev \</span>
-<span class="go">    libavformat-dev libdevil-dev</span>
+<span class="go">    libavformat-dev libdevil-dev lua5.1</span>
 </pre></div>
 
 
@@ -476,8 +476,8 @@ screen.</p>
 <p><code>"Hello World"</code> is obviously the value we want to put on the virtual
 screen.  <code>100</code> is the size of the output in screen units. <code>1,1,1,1</code> is
 color in RGBA format (a bright white).</p>
-<p>To display this example using <code>info-beamer</code>, switch into the <code>samples</code>
-directory and type </p>
+<p>To display this example using <code>info-beamer</code>, switch into the <code>info-beamer</code>
+source directory and type</p>
 <div class="codehilite"><pre><span class="gp">user:~/src/info-beamer$</span> ./info-beamer samples/hello
 </pre></div>
 
