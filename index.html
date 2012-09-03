@@ -25,9 +25,14 @@
         z-index: 10;
         position: absolute; top: 0; right: 0; border: 0;
       }
-      #download {
+      #flattr-button {
         position: absolute;
         right: 30px;
+        bottom: 30px;
+      }
+      #download {
+        position: absolute;
+        right: 90px;
         bottom: 30px;
         padding: 16px 30px;
         display: inline-block;
@@ -151,6 +156,11 @@
        ga.src = 'http://www.google-analytics.com/ga.js';
        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
       })();
+      (function() {
+       var s = document.createElement('script'), t = document.getElementsByTagName('script')[0];
+       s.type = 'text/javascript'; s.async = true; s.src = 'http://api.flattr.com/js/0.6/load.js?mode=auto';
+       t.parentNode.insertBefore(s, t);
+      })();
     </script>
     <meta name="google-site-verification" content="mWJTI5Ft8Gx4c-W-PaHSTWkdriLE4EgqN0fZ6HTE5kU" />
   </head>
@@ -160,6 +170,14 @@
       <div id='logo'>
         <img src='beamer.png' alt='Info Beamer!'>
         <a href='http://github.com/dividuum/info-beamer' id='download'>Get it on GitHub</a>
+        <div id="flattr-button">
+          <a class="FlattrButton" style="display:none;" href="http://info-beamer.org/"></a>
+          <noscript>
+            <a href="http://flattr.com/thing/869366/Info-Beamer" target="_blank">
+              <img src="http://api.flattr.com/button/flattr-badge-large.png" alt="Flattr this" title="Flattr this" border="0"/>
+            </a>
+          </noscript>
+        </div>
       </div>
       <h1 class='centered'>The Multimedia Presenter for Lua</h1>
         <p>
