@@ -193,6 +193,10 @@ language</a>.</p>
 </ul>
 </li>
 <li><a href="#building-from-source">Building From Source</a></li>
+<li><a href="#troubleshooting">Troubleshooting</a><ul>
+<li><a href="#usrbinld-cannot-find-llua51">/usr/bin/ld: cannot find -llua5.1</a></li>
+</ul>
+</li>
 <li><a href="#installation">Installation</a></li>
 </ul>
 </li>
@@ -240,7 +244,7 @@ language</a>.</p>
 </ul>
 </li>
 <li><a href="#image-resourcerender95childname">image = resource.render_child(name)</a></li>
-<li><a href="#image-resourcecreate_snapshot">image = resource.create_snapshot()</a></li>
+<li><a href="#image-resourcecreate_snapshotmipmap">image = resource.create_snapshot(mipmap)</a></li>
 </ul>
 </li>
 <li><a href="#opengl-related-functions">OpenGL Related Functions</a><ul>
@@ -311,6 +315,7 @@ language</a>.</p>
 <li><a href="#can-i-use-existing-lua-code-or-libraries">Can I use existing Lua code or libraries?</a></li>
 <li><a href="#lua-sucks-why-not-javascriptpythonother-language-of-your-choice">Lua sucks! Why not Javascript/Python/other language of your choice?</a></li>
 <li><a href="#where-is-the-windowsosx-version">Where is the Windows/OSX version?</a></li>
+<li><a href="#kernel-load-error">kernel load error</a></li>
 </ul>
 </li>
 </ul>
@@ -414,6 +419,15 @@ type <code>make</code> inside the root directory:</p>
 <span class="go">Copyright (c) 2012, Florian Wesch &lt;fw@dividuum.de&gt;</span>
 
 <span class="go">usage: ./info-beamer &lt;root_name&gt;</span>
+</pre></div>
+
+
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="usrbinld-cannot-find-llua51">/usr/bin/ld: cannot find -llua5.1</h3>
+<p>I didn't find a reliable way to detect the library name for lua5.1. I'm
+using the linker flag -llua5.1 for linking. If your lua 5.1 library is
+called liblua.so, try the following <code>make</code> command line:</p>
+<div class="codehilite"><pre><span class="gp">user:~/src/info-beamer$</span> <span class="nv">LUA_LDFLAGS</span><span class="o">=</span><span class="s2">&quot;-llua&quot;</span> make
 </pre></div>
 
 
@@ -787,10 +801,11 @@ you need a persistent connection.</p>
 <code>node.render</code> within the child.</p>
 <p>The returned <code>image</code> supports the same methods like images objects created
 by <code>resource.load_image</code>.</p>
-<h3 id="image-resourcecreate_snapshot">image = resource.create_snapshot()</h3>
+<h3 id="image-resourcecreate_snapshotmipmap">image = resource.create_snapshot(mipmap)</h3>
 <p>Copies the current framebuffer output (all things drawn up to this point) 
 into a new image. This allows you to feed the output of the node
 into a shader in the next iteration.</p>
+<p>If <code>mipmap</code> is true, the resulting image object will be mipmapped.</p>
 <p>This function can only be called inside of <code>node.render</code> (or any
 functions called from there). </p>
 <p>The returned <code>image</code> supports the same methods like images objects created
@@ -814,6 +829,7 @@ matrices. This should be more than enough for normal visualisations.</p>
 <p>Resets the view to an orthogonal projection. It will create a projection
 where the topleft pixel of the virtualscreen is at <code>0</code>, <code>0</code> and the
 bottomright pixel is at <code>WIDTH</code>, <code>HEIGHT</code>. This is the default mode.</p>
+<p>Calling this function will discard all matrices pushed by gl.pushMatrix().</p>
 <h3 id="glperspectivefov-eyex-eyey-eyez-centerx-centery-centerz">gl.perspective(fov, eyex, eyey, eyez, centerx, centery, centerz)</h3>
 <p>This will create a perspective projection. The field of view is given by
 <code>fov</code>. The camera (or eye) will be at the coordinates <code>eyex</code>, <code>eyey</code>,
@@ -833,6 +849,7 @@ the camera will always be <code>0</code>, <code>-1</code>, <code>0</code>.</p>
 <p>Produces a rotation of <code>angle</code> degrees around the vector <code>x</code>, <code>y</code>, <code>z</code>.
 Consider using <code>gl.perspective</code> to see the scene in perspective mode. It
 might look better.</p>
+<p>Calling this function will discard all matrices pushed by gl.pushMatrix().</p>
 <h3 id="gltranslatex-y-z">gl.translate(x, y, [z])</h3>
 <p>Produces a translation by <code>x</code>, <code>y</code>, <code>z</code>. <code>z</code> is optional and defaults to
 <code>0</code>.  Consider using <code>gl.perspective</code> to see the scene in perspective mode.
@@ -866,7 +883,7 @@ registered using <code>node.event</code>. The following events are available:</p
 <p>Registers an event handler that is called if <code>info-beamer</code> detects that a
 child node was added to the current node. The name of the new child node is
 provided in <code>child_name</code>. Example usage:</p>
-<div class="codehilite"><pre><span class="n">node</span><span class="p">.</span><span class="n">event</span><span class="p">(</span><span class="s2">&quot;</span><span class="s">child_add&quot;</span><span class="p">,</span> <span class="n">function</span><span class="p">(</span><span class="n">child_name</span><span class="p">)</span>
+<div class="codehilite"><pre><span class="n">node</span><span class="p">.</span><span class="n">event</span><span class="p">(</span><span class="s2">&quot;</span><span class="s">child_add&quot;</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="n">child_name</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="s">new child &quot;</span> <span class="o">..</span> <span class="n">child_name</span> <span class="o">..</span> <span class="s2">&quot;</span><span class="s"> added&quot;</span><span class="p">)</span>
 <span class="k">end</span><span class="p">)</span>
 </pre></div>
@@ -930,7 +947,7 @@ used for debugging a node from remote.</p>
 <p>Any text you type while connected will trigger the <code>input</code> event. The
 <code>input</code> event will be given the provided line. This can be used to feed a
 node with input from outside sources.</p>
-<div class="codehilite"><pre><span class="n">node</span><span class="p">.</span><span class="n">event</span><span class="p">(</span><span class="s2">&quot;</span><span class="s">input&quot;</span><span class="p">,</span> <span class="n">function</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+<div class="codehilite"><pre><span class="n">node</span><span class="p">.</span><span class="n">event</span><span class="p">(</span><span class="s2">&quot;</span><span class="s">input&quot;</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="s">Input was: &quot;</span> <span class="o">..</span> <span class="n">line</span><span class="p">)</span>
 <span class="k">end</span><span class="p">)</span>
 </pre></div>
@@ -989,7 +1006,7 @@ while calling <code>util.file_watch</code> and every time the file changes. The
 handler will receive the content of the file as a string. </p>
 <p><code>util.file_watch</code> can for example be used the keep variables in sync with a
 config file:</p>
-<div class="codehilite"><pre><span class="n">util</span><span class="p">.</span><span class="n">file_watch</span><span class="p">(</span><span class="s2">&quot;</span><span class="s">banner.txt&quot;</span><span class="p">,</span> <span class="n">function</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+<div class="codehilite"><pre><span class="n">util</span><span class="p">.</span><span class="n">file_watch</span><span class="p">(</span><span class="s2">&quot;</span><span class="s">banner.txt&quot;</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
     <span class="n">text</span> <span class="o">=</span> <span class="n">content</span>
 <span class="k">end</span><span class="p">)</span>
 
@@ -1015,11 +1032,11 @@ the output and drawing the snapshot with the given shader and its options.</p>
 <p>Will create a OSC mapper that makes if simple to dispatch OSC messages to
 different functions. Think of it as Url-routing for OSC messages:</p>
 <div class="codehilite"><pre><span class="n">util</span><span class="p">.</span><span class="n">osc_mapper</span><span class="p">{</span>
-    <span class="p">[</span><span class="s2">&quot;</span><span class="s">slider/(.*)&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">function</span><span class="p">(</span><span class="n">slider_num</span><span class="p">,</span> <span class="n">slider_arg1</span><span class="p">,</span> <span class="o">..</span><span class="p">.)</span>
-        <span class="o">..</span><span class="p">.</span>
+    <span class="p">[</span><span class="s2">&quot;</span><span class="s">slider/(.*)&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="k">function</span><span class="p">(</span><span class="n">slider_num</span><span class="p">,</span> <span class="n">slider_arg1</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+        <span class="o">...</span>
     <span class="k">end</span><span class="p">;</span>
-    <span class="p">[</span><span class="s2">&quot;</span><span class="s">fader/1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">function</span><span class="p">(</span><span class="n">fader_args</span><span class="p">)</span>
-        <span class="o">..</span><span class="p">.</span>
+    <span class="p">[</span><span class="s2">&quot;</span><span class="s">fader/1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="k">function</span><span class="p">(</span><span class="n">fader_args</span><span class="p">)</span>
+        <span class="o">...</span>
     <span class="k">end</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
@@ -1131,6 +1148,17 @@ use the <code>info-beamer</code> to visualize the content. Instead of files you 
 also use UDP, OSC or TCP to update your node from any language.</p>
 <h3 id="where-is-the-windowsosx-version">Where is the Windows/OSX version?</h3>
 <p>There is none. The <code>info-beamer</code> is currently linux only.</p>
+<h3 id="kernel-load-error">kernel load error</h3>
+<p>The <code>info-beamer</code> uses the installed binary <code>lua</code> to precompile the
+included files <code>kernel.lua</code> and <code>userlib.lua</code>. <code>info-beamer</code> itself uses
+the install liblua. If the version number between the lib and the binary
+differs, you'll get an error. Make sure the binary <code>lua</code> is version 5.1,
+then recompile.</p>
+<div class="codehilite"><pre><span class="gp">$</span> user:~<span class="nv">$ </span>lua -v
+<span class="go">Lua 5.1.4  Copyright (C) 1994-2008 Lua.org, PUC-Rio</span>
+</pre></div>
+
+
 <h1 id="contributing">Contributing</h1>
 <p>Thanks for your interest in <code>info-beamer</code>. <code>info-beamer</code> tries to be a
 simple framework for building interactive realtime presentations. Lets keep
