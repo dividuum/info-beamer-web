@@ -313,8 +313,13 @@ language</a>.</p>
 <li><a href="#port-4444-is-already-in-use-how-can-i-use-another-port">Port 4444 is already in use. How can I use another port?</a></li>
 <li><a href="#how-can-fetch-content-from-http">How can fetch content from HTTP?</a></li>
 <li><a href="#can-i-use-existing-lua-code-or-libraries">Can I use existing Lua code or libraries?</a></li>
+<li><a href="#can-i-automatically-load-json-lua-files">Can I automatically load json / lua files?</a></li>
+</ul>
+</li>
+<li><a href="#misc">Misc</a><ul>
 <li><a href="#lua-sucks-why-not-javascriptpythonother-language-of-your-choice">Lua sucks! Why not Javascript/Python/other language of your choice?</a></li>
 <li><a href="#where-is-the-windowsosx-version">Where is the Windows/OSX version?</a></li>
+<li><a href="#can-i-use-luajit2">Can I use luajit2?</a></li>
 <li><a href="#kernel-load-error">kernel load error</a></li>
 </ul>
 </li>
@@ -1126,11 +1131,45 @@ module</a>
 and put in your node directory. From within your node code you can then
 <code>require</code> this module, just as you would in normal Lua code:</p>
 <div class="codehilite"><pre><span class="n">json</span> <span class="o">=</span> <span class="nb">require</span> <span class="s2">&quot;</span><span class="s">json&quot;</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="p">.</span><span class="n">encode</span><span class="p">{</span><span class="n">foo</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="s">bar})</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="p">.</span><span class="n">encode</span><span class="p">{</span><span class="n">foo</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="s">bar&quot;</span><span class="p">})</span>
 </pre></div>
 
 
 <p>Native modules or precompiled modules cannot be loaded.</p>
+<h3 id="can-i-automatically-load-json-lua-files">Can I automatically load json / lua files?</h3>
+<p>Yes. The auto_loader uses the table util.loaders. Entries in this table map 
+filename suffixes to loader functions. These functions are called with a 
+filename and are expected to return a value or raise an error.</p>
+<p>To automatically load json files, use the following code:</p>
+<div class="codehilite"><pre><span class="n">json</span> <span class="o">=</span> <span class="nb">require</span> <span class="s2">&quot;</span><span class="s">json&quot;</span> <span class="c1">-- see previous faq</span>
+
+<span class="n">util</span><span class="p">.</span><span class="n">loaders</span><span class="p">.</span><span class="n">json</span> <span class="o">=</span> <span class="k">function</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">json</span><span class="p">.</span><span class="n">decode</span><span class="p">(</span><span class="n">resource</span><span class="p">.</span><span class="n">load_file</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+<span class="k">end</span>
+
+<span class="c1">-- invoke the autoloader</span>
+<span class="n">util</span><span class="p">.</span><span class="n">auto_loader</span><span class="p">(</span><span class="nb">_G</span><span class="p">)</span>
+</pre></div>
+
+
+<p>To automatically parse and evaluate all lua files except those that
+where previously loaded using <code>require</code>, use the following code:</p>
+<div class="codehilite"><pre><span class="n">util</span><span class="p">.</span><span class="n">loaders</span><span class="p">.</span><span class="n">lua</span> <span class="o">=</span> <span class="k">function</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="kd">local</span> <span class="n">name</span><span class="p">,</span> <span class="n">suffix</span> <span class="o">=</span> <span class="n">filename</span><span class="p">:</span><span class="n">match</span><span class="p">(</span><span class="s2">&quot;</span><span class="s">(.*)[.]([^.]+)$&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">package.loaded</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="k">then</span>
+        <span class="nb">error</span><span class="p">(</span><span class="s2">&quot;</span><span class="s">ignoring &quot;</span> <span class="o">..</span> <span class="n">name</span> <span class="o">..</span> <span class="s2">&quot;</span><span class="s">: already loaded as module&quot;</span><span class="p">)</span>
+    <span class="k">end</span>
+    <span class="k">return</span> <span class="nb">assert</span><span class="p">(</span><span class="nb">loadstring</span><span class="p">(</span>
+        <span class="n">resource</span><span class="p">.</span><span class="n">load_file</span><span class="p">(</span><span class="n">filename</span><span class="p">),</span> <span class="s2">&quot;</span><span class="s">=&quot;</span> <span class="o">..</span> <span class="n">PATH</span> <span class="o">..</span> <span class="s2">&quot;</span><span class="s">/&quot;</span> <span class="o">..</span> <span class="n">filename</span>
+    <span class="p">))()</span>
+<span class="k">end</span>
+
+<span class="c1">-- invoke the autoloader</span>
+<span class="n">util</span><span class="p">.</span><span class="n">auto_loader</span><span class="p">(</span><span class="nb">_G</span><span class="p">)</span>
+</pre></div>
+
+
+<h2 id="misc">Misc</h2>
 <h3 id="lua-sucks-why-not-javascriptpythonother-language-of-your-choice">Lua sucks! Why not Javascript/Python/other language of your choice?</h3>
 <p>Lua is a fast. This is important, since the function <code>node.render</code> is
 called for each frame. Lua is small and simple. If you did any programming
@@ -1148,6 +1187,23 @@ use the <code>info-beamer</code> to visualize the content. Instead of files you 
 also use UDP, OSC or TCP to update your node from any language.</p>
 <h3 id="where-is-the-windowsosx-version">Where is the Windows/OSX version?</h3>
 <p>There is none. The <code>info-beamer</code> is currently linux only.</p>
+<h3 id="can-i-use-luajit2">Can I use luajit2?</h3>
+<p>Yes. Although some sandboxing features will be disabled: luajit2 uses
+its own allocator which cannot be overwritten, so limiting memory 
+usage isn't possible. Aborting nodes that use too much CPU time might
+be unreliable. If you only run nodes you trust, this shouldn't be a 
+problem.</p>
+<p>To use <code>info-beamer</code> in combination with luajit2, call <code>make</code> like this:</p>
+<div class="codehilite"><pre><span class="gp">$</span> <span class="nv">USE_LUAJIT</span><span class="o">=</span>1 make
+</pre></div>
+
+
+<p>Or if you compiled your own version of luajit2: </p>
+<div class="codehilite"><pre>$ <span class="n">USE_LUAJIT</span><span class="p">=</span>1 <span class="n">LUA_CFLAGS</span><span class="p">=</span><span class="o">-</span><span class="n">I</span><span class="p">.</span><span class="o">./</span><span class="n">luajit</span><span class="o">-</span>2<span class="p">.</span>0<span class="o">/</span><span class="n">src</span> <span class="o">\</span>
+  <span class="n">LUA_LDFLAGS</span><span class="p">=.</span><span class="o">./</span><span class="n">luajit</span><span class="o">-</span>2<span class="p">.</span>0<span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">libluajit</span><span class="p">.</span><span class="n">a</span> <span class="n">make</span>
+</pre></div>
+
+
 <h3 id="kernel-load-error">kernel load error</h3>
 <p>The <code>info-beamer</code> uses the installed binary <code>lua</code> to precompile the
 included files <code>kernel.lua</code> and <code>userlib.lua</code>. <code>info-beamer</code> itself uses
