@@ -1,40 +1,135 @@
 <html>
   <head>
     <link href='http://fonts.googleapis.com/css?family=Gudea' rel='stylesheet' type='text/css'>
-    <title>Info Beamer - The Interactive Multimedia Presenter</title>
+    <title>info-beamer - The Interactive Multimedia Presenter for Lua</title>
+    <meta name="description" content="info-beamer allows you to rapidly prototype interactive multimedia presentations using the Lua programming language."/>
     <style>
+      body{min-width:960px}.container_12,.container_16{margin-left:auto;margin-right:auto;width:960px}.grid_1,.grid_2,.grid_3,.grid_4,.grid_5,.grid_6,.grid_7,.grid_8,.grid_9,.grid_10,.grid_11,.grid_12,.grid_13,.grid_14,.grid_15,.grid_16{display:inline;float:left;margin-left:10px;margin-right:10px}.push_1,.pull_1,.push_2,.pull_2,.push_3,.pull_3,.push_4,.pull_4,.push_5,.pull_5,.push_6,.pull_6,.push_7,.pull_7,.push_8,.pull_8,.push_9,.pull_9,.push_10,.pull_10,.push_11,.pull_11,.push_12,.pull_12,.push_13,.pull_13,.push_14,.pull_14,.push_15,.pull_15{position:relative}.container_12
+      .grid_3,.container_16 .grid_4{width:220px}.container_12 .grid_6,.container_16 .grid_8{width:460px}.container_12
+      .grid_9,.container_16 .grid_12{width:700px}.container_12 .grid_12,.container_16
+      .grid_16{width:940px}.alpha{margin-left:0}.omega{margin-right:0}.container_12 .grid_1{width:60px}.container_12
+      .grid_2{width:140px}.container_12 .grid_4{width:300px}.container_12 .grid_5{width:380px}.container_12
+      .grid_7{width:540px}.container_12 .grid_8{width:620px}.container_12 .grid_10{width:780px}.container_12
+      .grid_11{width:860px}.container_16 .grid_1{width:40px}.container_16 .grid_2{width:100px}.container_16
+      .grid_3{width:160px}.container_16 .grid_5{width:280px}.container_16 .grid_6{width:340px}.container_16
+      .grid_7{width:400px}.container_16 .grid_9{width:520px}.container_16 .grid_10{width:580px}.container_16
+      .grid_11{width:640px}.container_16 .grid_13{width:760px}.container_16 .grid_14{width:820px}.container_16
+      .grid_15{width:880px}.container_12 .prefix_3,.container_16 .prefix_4{padding-left:240px}.container_12
+      .prefix_6,.container_16 .prefix_8{padding-left:480px}.container_12 .prefix_9,.container_16
+      .prefix_12{padding-left:720px}.container_12 .prefix_1{padding-left:80px}.container_12
+      .prefix_2{padding-left:160px}.container_12 .prefix_4{padding-left:320px}.container_12
+      .prefix_5{padding-left:400px}.container_12 .prefix_7{padding-left:560px}.container_12
+      .prefix_8{padding-left:640px}.container_12 .prefix_10{padding-left:800px}.container_12
+      .prefix_11{padding-left:880px}.container_16 .prefix_1{padding-left:60px}.container_16
+      .prefix_2{padding-left:120px}.container_16 .prefix_3{padding-left:180px}.container_16
+      .prefix_5{padding-left:300px}.container_16 .prefix_6{padding-left:360px}.container_16
+      .prefix_7{padding-left:420px}.container_16 .prefix_9{padding-left:540px}.container_16
+      .prefix_10{padding-left:600px}.container_16 .prefix_11{padding-left:660px}.container_16
+      .prefix_13{padding-left:780px}.container_16 .prefix_14{padding-left:840px}.container_16
+      .prefix_15{padding-left:900px}.container_12 .suffix_3,.container_16 .suffix_4{padding-right:240px}.container_12
+      .suffix_6,.container_16 .suffix_8{padding-right:480px}.container_12 .suffix_9,.container_16
+      .suffix_12{padding-right:720px}.container_12 .suffix_1{padding-right:80px}.container_12
+      .suffix_2{padding-right:160px}.container_12 .suffix_4{padding-right:320px}.container_12
+      .suffix_5{padding-right:400px}.container_12 .suffix_7{padding-right:560px}.container_12
+      .suffix_8{padding-right:640px}.container_12 .suffix_10{padding-right:800px}.container_12
+      .suffix_11{padding-right:880px}.container_16 .suffix_1{padding-right:60px}.container_16
+      .suffix_2{padding-right:120px}.container_16 .suffix_3{padding-right:180px}.container_16
+      .suffix_5{padding-right:300px}.container_16 .suffix_6{padding-right:360px}.container_16
+      .suffix_7{padding-right:420px}.container_16 .suffix_9{padding-right:540px}.container_16
+      .suffix_10{padding-right:600px}.container_16 .suffix_11{padding-right:660px}.container_16
+      .suffix_13{padding-right:780px}.container_16 .suffix_14{padding-right:840px}.container_16
+      .suffix_15{padding-right:900px}.container_12 .push_3,.container_16 .push_4{left:240px}.container_12
+      .push_6,.container_16 .push_8{left:480px}.container_12 .push_9,.container_16 .push_12{left:720px}.container_12
+      .push_1{left:80px}.container_12 .push_2{left:160px}.container_12 .push_4{left:320px}.container_12
+      .push_5{left:400px}.container_12 .push_7{left:560px}.container_12 .push_8{left:640px}.container_12
+      .push_10{left:800px}.container_12 .push_11{left:880px}.container_16 .push_1{left:60px}.container_16
+      .push_2{left:120px}.container_16 .push_3{left:180px}.container_16 .push_5{left:300px}.container_16
+      .push_6{left:360px}.container_16 .push_7{left:420px}.container_16 .push_9{left:540px}.container_16
+      .push_10{left:600px}.container_16 .push_11{left:660px}.container_16 .push_13{left:780px}.container_16
+      .push_14{left:840px}.container_16 .push_15{left:900px}.container_12 .pull_3,.container_16
+      .pull_4{left:-240px}.container_12 .pull_6,.container_16 .pull_8{left:-480px}.container_12 .pull_9,.container_16
+      .pull_12{left:-720px}.container_12 .pull_1{left:-80px}.container_12 .pull_2{left:-160px}.container_12
+      .pull_4{left:-320px}.container_12 .pull_5{left:-400px}.container_12 .pull_7{left:-560px}.container_12
+      .pull_8{left:-640px}.container_12 .pull_10{left:-800px}.container_12 .pull_11{left:-880px}.container_16
+      .pull_1{left:-60px}.container_16 .pull_2{left:-120px}.container_16 .pull_3{left:-180px}.container_16
+      .pull_5{left:-300px}.container_16 .pull_6{left:-360px}.container_16 .pull_7{left:-420px}.container_16
+      .pull_9{left:-540px}.container_16 .pull_10{left:-600px}.container_16 .pull_11{left:-660px}.container_16
+      .pull_13{left:-780px}.container_16 .pull_14{left:-840px}.container_16
+      .pull_15{left:-900px}.clear{clear:both;display:block;overflow:hidden;visibility:hidden;width:0;height:0}.clearfix:before,.clearfix:after,.container_12:before,.container_12:after,.container_16:before,.container_16:after{content:'.';display:block;overflow:hidden;visibility:hidden;font-size:0;line-height:0;width:0;height:0}.clearfix:after,.container_12:after,.container_16:after{clear:both}.clearfix,.container_12,.container_16{zoom:1}
       body {
-        background-color: #FFF;
-        margin: 30px 0 0;
+        background-color: #012;
+        background-image: url(space.jpg);
+        background-size: 100% auto;
+        margin:0;
+        color: #fff;
         font-family: 'Gudea', sans-serif;
       }
-      h1 {
-        font-size: 40px;
+      a {
+        color: #aaa;
       }
       h2 {
-        font-size: 60px;
-        margin: 50px 0;
+        font-size: 30px;
+        color: #fff;
       }
+
       h3 {
         font-size: 30px;
+        margin-top: 60px;
+        padding-left: 160px;
+        color: #fff;
       }
-      #logo {
+      .head_grid {
         position: relative;
+        height: 400px;
       }
-      #fork {
-        z-index: 10;
-        position: absolute; top: 0; right: 0; border: 0;
+      #head {
+        height: 400px;
       }
+      #name {
+        position: absolute;
+        left: 50px;
+        top: 50px;
+        font-size: 150px;
+        margin: 0;
+      }
+      #sub {
+        position: absolute;
+        left: 60px;
+        top: 200px;
+        font-size: 30px;
+        margin: 0;
+      }
+      #body{
+        color: #ccc;
+        border-top: 2px solid #036;
+        background: #013;
+        padding: 30px;
+      }
+      #tail {
+        color: #444;
+        border-top: 10px solid #036;
+        padding: 20px 0 50px;
+        background-color: #FFF;
+        font-size: 13px;
+        text-align: center;
+      }
+      #copy {
+        margin-top: 30px;
+        color: #999;
+      }
+
       #flattr-button {
         position: absolute;
         right: 30px;
         bottom: 30px;
       }
-      #download {
+      #action {
         position: absolute;
         right: 90px;
         bottom: 30px;
-        padding: 16px 30px;
+      }
+      .button {
+        padding: 15px 15px;
         display: inline-block;
         line-height: normal;
         font-family: Helvetica,arial,freesans,clean,sans-serif;
@@ -53,7 +148,7 @@
         box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         cursor: pointer;
       }
-      #download:hover {
+      .button:hover {
         color: #337797;
         text-decoration: none;
         background-color: #f0f7fa;
@@ -64,7 +159,7 @@
         border-bottom-color: #97c7dd;
 
       }
-      #download:active {
+      .button:active {
         color: #fff;
         text-shadow: -1px -1px 0 rgba(0,0,0,0.3);
         border-color: #2a65a0;
@@ -74,71 +169,14 @@
         background-image: -webkit-linear-gradient(#0770a0,#0ca6dd);
         -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#0770a0',endColorstr='#0ca6dd')";
       }
-      #top {
-        width: 820px;
-        margin: 0 auto 80px;
-      }
-      #features {
-        border-top: 5px solid #EEE;
-        border-bottom: 5px solid #A0A0EE;
-        background-color: #E0E0FF;
-        margin: auto;
-      }
-      #intro {
-        width: 650px;
-        margin: 10px auto;
-      }
-      #screenshots {
-        background-color: black;
-        border-bottom: 5px solid #888;
-        padding: 20px 0;
-      }
-      #screenshots h2 {
-        color: #FFF;
-      }
-      #bottom {
-        padding: 20px 0 50px;
-        background-color: #FFF;
-        font-size: 13px;
-      }
-      #bottom img {
-        position: relative;
-        top: 4px;
-      }
-      .left {
-        width: 320px;
-        float: left;
-      }
-      .right {
-        width: 500px;
-        float: left;
-      }
-      .row {
-        width: 820px;
-        margin: auto;
-        height: 320px;
-      }
-      .centered {
-        text-align: center;
-      }
-      pre {
-        margin: 0;
-      }
-      .light {
-        margin-top: 30px;
-        color: #999;
-      }
-      .light a {
-        color: #888;
-      }
       .codehilite { 
-        background-color: #DDD;
+        background-color: #000;
         padding: 15px 15px;
-        font-size: 16px;
-        border: 1px solid black;
+        font-size: 12px;
+        border: 1px solid white;
         border-radius: 5px;
-        width: 520px;
         margin: auto;
+        color: #fff;
       }
       .codehilite .s { color: #AA3300 } /* Literal.String */
       .codehilite .o { color: #555555 } /* Operator */
@@ -165,31 +203,44 @@
     <meta name="google-site-verification" content="mWJTI5Ft8Gx4c-W-PaHSTWkdriLE4EgqN0fZ6HTE5kU" />
   </head>
   <body>
-    <a href="http://github.com/dividuum/info-beamer"><img id='fork' src="fork.png" alt="Fork me on GitHub"></a>
-    <div id='top'>
-      <div id='logo'>
-        <img src='beamer.png' alt='Info Beamer!'>
-        <a href='http://github.com/dividuum/info-beamer' id='download'>Get it on GitHub</a>
-        <div id="flattr-button">
-          <a class="FlattrButton" style="display:none;" href="http://info-beamer.org/"></a>
-          <noscript>
-            <a href="http://flattr.com/thing/869366/Info-Beamer" target="_blank">
-              <img src="http://api.flattr.com/button/flattr-badge-large.png" alt="Flattr this" title="Flattr this" border="0"/>
-            </a>
-          </noscript>
+    <div id='head'>
+      <div class="container_12">
+        <div class='grid_12 head_grid'>
+          <h1 id='name'>info-beamer</h1>
+          <h2 id='sub'>The Multimedia Presenter for Lua</h2>
+          <div id='action'>
+            <a href='/doc/' class='button'>Documentation</a>
+            <a href='http://github.com/dividuum/info-beamer' class='button'>Sourcecode on GitHub</a>
+          </div>
+          <div id="flattr-button">
+            <a class="FlattrButton" style="display:none;" href="http://info-beamer.org/"></a>
+            <noscript>
+              <a href="http://flattr.com/thing/869366/Info-Beamer" target="_blank">
+                <img src="http://api.flattr.com/button/flattr-badge-large.png" alt="Flattr this" title="Flattr this" border="0"/>
+              </a>
+            </noscript>
+          </div>
         </div>
       </div>
-      <h1 class='centered'>The Multimedia Presenter for Lua</h1>
-        <p>
+    </div>
+    <div id='body'>
+      <div class="container_12">
+        <div class='grid_3'>
+          <h2>About</h2>
+        </div>
+        <div class='grid_9'>
+          <h2>Hello World Example</h2>
+        </div>
+      </div>
+      <div class="container_12">
+        <div class='grid_3'>
           <b>info-beamer</b> allows you to rapidly prototype interactive multimedia
-          presentations using the Lua programming language.  <b>info-beamer</b> treats a
-          directory as a presentable unit. A directory (called a node)
+          presentations using the Lua programming language.  A directory (called a node)
           consists of resource files (images, videos, fonts or shaders) and
-          a control script called node.lua. Read more in the <a href='/doc/'>documentation</a> or see
-          some <a href='#screenshots'>screenshots of info-beamer in action</a>.
-        </p>
-      <div>
-        <table><tr><td id='example'><br/>
+          a control script called node.lua. Learn more in the <a href='/doc/'>documentation</a>.
+        </div>
+        <div class='grid_9'>
+          <table><tr><td id='example'><br/>
 <!-- hello world -->
 <div class="codehilite"><pre><span class="n">gl</span><span class="p">.</span><span class="n">setup</span><span class="p">(</span><span class="mi">1024</span><span class="p">,</span> <span class="mi">768</span><span class="p">)</span>
 
@@ -200,170 +251,161 @@
 <span class="k">end</span>
 </pre></div>
 <!-- hello world -->
-            See the <a href='/doc/#first-steps'>documentation<a/> for more examples.
+            See the <a href='/doc/#first-steps'>documentation</a> for more examples.
           </td><td id='hello'>
             <img src='hello.png'>
-        </td></tr></table>
+          </td></tr></table>
+        </div>
       </div>
-    </div>
-    <div id='features'>
-      <div id='intro' class='centered'>
-        <h2>Why <b>info-beamer</b>?</h2>
+      <div class="container_12">
+        <div class='grid_6'>
+          <h3>Rapid Development</h3>
+        </div>
+        <div class='grid_6'>
+          <h3>Powered by Lua</h3>
+        </div>
       </div>
-      <div class='row'>
-        <div class='left'>
+      <div class="container_12">
+        <div class='grid_2'>
           <img src='autoupdate.png'>
         </div>
-        <div class='right'>
-          <h3>Rapid Development</h3>
-          <p>
+        <div class='grid_4'>
+          Edit the code for your node, change images or exchange font
+          files. <b>info-beamer</b> will notice your changes and reload changed
+          files.  See the effects of your changes immediatelly.
 
-            Edit the code for your node, change images or exchange font
-            files. <b>info-beamer</b> will notice your changes and reload changed
-            files.  See the effects of your changes immediatelly.
-
-            <ul>
-              <li><b>info-beamer</b> uses the linux inotify API to detect changed files or directories.
-              <li>You never have to restart <b>info-beamer</b> to see changes you made. <b>info-beamer</b> can 
-                  <a href='/doc/#utilresource95loadertable95of95filenames'>reload updated files</a> for you.
-            </ul>
-          </p>
+          <ul>
+            <li><b>info-beamer</b> uses the linux inotify API to detect changed files or directories.
+            <li>You never have to restart <b>info-beamer</b> to see changes you made. <b>info-beamer</b> can 
+                <a href='/doc/#utilresource95loadertable95of95filenames'>reload updated files</a> for you.
+          </ul>
         </div>
-      </div>
-      <div class='row'>
-        <div class='left'>
-          <img src='nested.png'>
-        </div>
-        <div class='right'>
-          <h3>Nested Content</h3>
-          <p>
-
-            Each directory forms a node. A node is the unit of presentation
-            for <b>info-beamer</b>. If a directory contains subdirectories, these
-            create child nodes. Child nodes can be rendered by parent
-            nodes. 
-
-            <ul>
-              <li>Allows you to create a toplevel node that switches between child nodes.
-              <li>Nodes can be developed independently and later 
-                  <a href='/doc/#rendering-child-nodes'>composed into one presentation</a>.
-              <li>Include remote content using the <a href='/doc/#vnc-resourcecreate95vnchostname-port'>VNC client</a>.
-            </ul>
-          </p>
-        </div>
-      </div>
-      <div class='row'>
-        <div class='left'>
-          <img src='control.png'>
-        </div>
-        <div class='right'>
-          <h3>Realtime control</h3>
-          <p>
-
-            Send OSC (open sound control) packets to <b>info-beamer</b>. Update
-            the state of your presentation in realtime. Or use TCP to
-            connect to <b>info-beamer</b> to see the debugging output of your
-            running code.
-
-            <ul>
-              <li>Simple <a href='/doc/#nodeeventdata-functiondata-suffix-end'>UDP protocol</a>
-                  and <a href='/doc/#nodeeventosc-functionsuffix-end'>OSC protocol</a> support.
-              <li>Let <b>info-beamer</b> display a directory shared using Dropbox. Since <b>info-beamer</b> will
-                  detect any changes to the directory, this will allow you
-                  to update your presentation from remote.
-            </ul>
-          </p>
-        </div>
-      </div>
-      <div class='row'>
-        <div class='left'>
-          <img src='performance.png'>
-        </div>
-        <div class='right'>
-          <h3>Performance</h3>
-          <p>
-
-            <b>info-beamer</b> uses OpenGL and will use hardware acceleration.
-            Full shader support using GLSL.
-
-            <ul>
-              <li>Load <a href='/doc/#shader-resourcecreate95shadervertex95shader-fragment95shader'>vertex and fragment shaders</a>.
-              <li>Control your shaders with <a href='/doc/#shaderusetable95of95shader95variables'>dynamic uniform values</a>.
-              <li>Feed your shaders with textures from images, videos, 
-                  child nodes or even VNC connections.
-            </ul>
-          </p>
-        </div>
-      </div>
-      <div class='row'>
-        <div class='left'>
-          <img src='filetypes.png'>
-        </div>
-        <div class='right'>
-          <h3>Fileformat Support</h3>
-          <p>
-
-            Load images and truetype (TTF) fonts. Video playback is
-            supported using the powerful libav library.
-
-            <ul>
-              <li><a href='/doc/#image-resourceload95imagefilename'>Image loading</a> is provided by DevIL.
-              <li><a href='/doc/#videos'>Video playback</a> is powered by libav. It should play most video 
-                  files you might have.
-              <li>Use Shaders in the GLSL language.
-              <li>Full <a href='/doc/#font-resourceload95fontfilename'>Truetype font support</a> using freetype.
-            </ul>
-          </p>
-        </div>
-      </div>
-      <div class='row'>
-        <div class='left'>
+        <div class='grid_2'>
           <img src='lua.png'>
         </div>
-        <div class='right'>
-          <h3>Powered by Lua</h3>
-          <p>
+        <div class='grid_4'>
+          <b>info-beamer</b> is controlled by your Lua code. A very simple API
+          is all you need to create advanced presentations. Lua enables
+          <b>info-beamer</b> to be truly rapid:
 
-            <b>info-beamer</b> is controlled by your Lua code. A very simple API
-            is all you need to create advanced presentations. Lua enables
-            <b>info-beamer</b> to be truly rapid:
-
-            <ul>
-              <li><a href='/doc/#node-events'>Update the running code</a> in realtime. There is no need to restart <b>info-beamer</b>.
-              <li>Lua is a simple language. If you have basic programming experience, 
-                  you'll learn Lua in a few hours.
-            </ul>
-          </p>
+          <ul>
+            <li><a href='/doc/#node-events'>Update the running code</a> in realtime. There is no need to restart <b>info-beamer</b>.
+            <li>Lua is a simple language. If you have basic programming experience, 
+                you'll learn Lua in a few hours.
+          </ul>
         </div>
       </div>
-      <div class='row'>
-        <div class='left'>
+      <div class="container_12">
+        <div class='grid_6'>
+          <h3>Fileformat Support</h3>
+        </div>
+        <div class='grid_6'>
+          <h3>Performance</h3>
+        </div>
+      </div>
+      <div class="container_12">
+        <div class='grid_2'>
+          <img src='filetypes.png'>
+        </div>
+        <div class='grid_4'>
+          Load images and truetype (TTF) fonts. Video playback is
+          supported using the powerful libav library.
+
+          <ul>
+            <li><a href='/doc/#image-resourceload95imagefilename'>Image loading</a> is provided by DevIL.
+            <li><a href='/doc/#videos'>Video playback</a> is powered by libav. It should play most video 
+                files you might have.
+            <li>Use Shaders in the GLSL language.
+            <li>Full <a href='/doc/#font-resourceload95fontfilename'>Truetype font support</a> using freetype.
+          </ul>
+        </div>
+        <div class='grid_2'>
+          <img src='performance.png'>
+        </div>
+        <div class='grid_4'>
+          <b>info-beamer</b> uses OpenGL and will use hardware acceleration.
+          Full shader support using GLSL.
+
+          <ul>
+            <li>Load <a href='/doc/#shader-resourcecreate95shadervertex95shader-fragment95shader'>vertex and fragment shaders</a>.
+            <li>Control your shaders with <a href='/doc/#shaderusetable95of95shader95variables'>dynamic uniform values</a>.
+            <li>Feed your shaders with textures from images, videos, 
+                child nodes or even VNC connections.
+          </ul>
+        </div>
+      </div>
+      <div class="container_12">
+        <div class='grid_6'>
+          <h3>Nested Content</h3>
+        </div>
+        <div class='grid_6'>
+          <h3>Realtime control</h3>
+        </div>
+      </div>
+      <div class="container_12">
+        <div class='grid_2'>
+          <img src='nested.png'>
+        </div>
+        <div class='grid_4'>
+          Each directory forms a node. A node is the unit of presentation
+          for <b>info-beamer</b>. If a directory contains subdirectories, these
+          create child nodes. Child nodes can be rendered by parent
+          nodes. 
+
+          <ul>
+            <li>Allows you to create a toplevel node that switches between child nodes.
+            <li>Nodes can be developed independently and later 
+                <a href='/doc/#rendering-child-nodes'>composed into one presentation</a>.
+            <li>Include remote content using the <a href='/doc/#vnc-resourcecreate95vnchostname-port'>VNC client</a>.
+          </ul>
+        </div>
+        <div class='grid_2'>
+          <img src='control.png'>
+        </div>
+        <div class='grid_4'>
+          Send OSC (open sound control) packets to <b>info-beamer</b>. Update
+          the state of your presentation in realtime. Or use TCP to
+          connect to <b>info-beamer</b> to see the debugging output of your
+          running code.
+
+          <ul>
+            <li>Simple <a href='/doc/#nodeeventdata-functiondata-suffix-end'>UDP protocol</a>
+                and <a href='/doc/#nodeeventosc-functionsuffix-end'>OSC protocol</a> support.
+            <li>Let <b>info-beamer</b> display a directory shared using Dropbox. Since <b>info-beamer</b> will
+                detect any changes to the directory, this will allow you
+                to update your presentation from remote.
+          </ul>
+        </div>
+      </div>
+      <div class="container_12">
+        <div class='grid_6'>
+          <h3>Opensource</h3>
+        </div>
+        <div class='grid_6'>
+          <h3>Ready?</h3>
+        </div>
+      </div>
+      <div class="container_12">
+        <div class='grid_2'>
           <img src='opensource.png'>
         </div>
-        <div class='right'>
-          <h3>Opensource</h3>
-          <p>
-            <b>info-beamer</b> is opensource software release under the BSD
-            2-clause license. <a href='https://github.com/dividuum/info-beamer'>Use and modify</a> the software as you like.
-          </p>
+        <div class='grid_4'>
+          <b>info-beamer</b> is opensource software release under the BSD
+          2-clause license. <a href='https://github.com/dividuum/info-beamer'>Use and modify</a> the software as you like.
+        </div>
+        <div class='grid_4 push_2'>
+            <a href='http://github.com/dividuum/info-beamer' class='button'>Sourcecode on GitHub</a>
         </div>
       </div>
     </div>
-    <div id='screenshots' class='centered'>
-      <a name='screenshots'></a>
-      <h2>Screenshots</h2>
-      <iframe class="imgur-album" width="820" height="550" frameborder="0" src="http://imgur.com/a/VA0B1/embed"></iframe>
-      <h2>Video</h2>
-      <iframe width="640" height="480" src="http://www.youtube.com/embed/tpF_EYCBo_A?rel=0" frameborder="0" allowfullscreen></iframe>
-    </div>
-    <div id='bottom' class='centered'>
+    <div id='tail' class='centered'>
       A project by 
       <img src='http://www.gravatar.com/avatar/1da51a03b64d071a4a0f0cf7daf15c4c?s=20'>
       Florian Wesch. Contact me at
       <a href='mailto:hello@info-beamer.org'>hello@info-beamer.org</a> or visit my website at
       <a href='http://dividuum.de/'>dividuum.de</a>.
       <br/>
-      <div class='light'>
+      <div id='copy'>
         Icons where taken from the <a href='http://schollidesign.deviantart.com/art/Human-O2-Iconset-105344123'>Human O2 Iconset</a>.
       </div>
     </div>
