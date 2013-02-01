@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>info-beamer - The Interactive Multimedia Presenter for Lua</title>
+    <title>info-beamer pi - A Digital Signage Player to the Raspberry PI</title>
     <meta name="description" content="info-beamer allows you to rapidly prototype interactive multimedia presentations using the Lua programming language."/>
     <style>
       body{min-width:960px}.container_12,.container_16{margin-left:auto;margin-right:auto;width:960px}.grid_1,.grid_2,.grid_3,.grid_4,.grid_5,.grid_6,.grid_7,.grid_8,.grid_9,.grid_10,.grid_11,.grid_12,.grid_13,.grid_14,.grid_15,.grid_16{display:inline;float:left;margin-left:10px;margin-right:10px}.push_1,.pull_1,.push_2,.pull_2,.push_3,.pull_3,.push_4,.pull_4,.push_5,.pull_5,.push_6,.pull_6,.push_7,.pull_7,.push_8,.pull_8,.push_9,.pull_9,.push_10,.pull_10,.push_11,.pull_11,.push_12,.pull_12,.push_13,.pull_13,.push_14,.pull_14,.push_15,.pull_15{position:relative}.container_12
@@ -56,7 +56,7 @@
       .pull_13{left:-780px}.container_16 .pull_14{left:-840px}.container_16
       .pull_15{left:-900px}.clear{clear:both;display:block;overflow:hidden;visibility:hidden;width:0;height:0}.clearfix:before,.clearfix:after,.container_12:before,.container_12:after,.container_16:before,.container_16:after{content:'.';display:block;overflow:hidden;visibility:hidden;font-size:0;line-height:0;width:0;height:0}.clearfix:after,.container_12:after,.container_16:after{clear:both}.clearfix,.container_12,.container_16{zoom:1}
       body {
-        background-color: #012;
+        background-color: #021;
         background-image: url(space.jpg);
         background-size: 100% auto;
         margin:0;
@@ -67,15 +67,13 @@
         color: #aaa;
       }
       h2 {
-        font-size: 30px;
+        font-size: 40px;
         color: #fff;
       }
-
       h3 {
-        font-size: 30px;
-        margin-top: 60px;
-        padding-left: 160px;
+        font-size: 20px;
         color: #fff;
+        margin: 10px 0 10px;
       }
       .head_grid {
         position: relative;
@@ -100,6 +98,7 @@
         top: 50px;
         font-size: 150px;
         margin: 0;
+        z-index: 2;
       }
       #sub {
         position: absolute;
@@ -107,12 +106,26 @@
         top: 200px;
         font-size: 30px;
         margin: 0;
+        z-index: 2;
+      }
+      #pi-img {
+        position: absolute;
+        right: -70px;
+        bottom: -260px;
+        width: 600px;
+        height: 450px;
+        z-index: 1;
       }
       #body{
         color: #ccc;
-        border-top: 2px solid #036;
-        background: #013;
+        border-top: 2px solid #063;
+        background: #031;
         padding: 30px;
+        min-height: 1000px;
+      }
+      .feature_row {
+        margin-top: 20px;
+        margin-bottom: 20px;
       }
       #tail {
         color: #444;
@@ -126,36 +139,45 @@
         margin-top: 30px;
         color: #999;
       }
-
-      #flattr-button {
-        position: absolute;
-        right: 30px;
-        bottom: 30px;
-      }
-      #pi-version {
-        position: absolute;
-        left: 60px;
-        bottom: 30px;
-        width: 300px;
-      }
-      #pi-version img {
-        position: absolute;
-        left: -55px;
-        top: -35px;
-      }
-      #pi-version a {
-        padding-left: 30px;
-      }
       #action {
         position: absolute;
-        right: 90px;
-        bottom: 30px;
+        left: 60px;
+        bottom: 55px;
+        width: 300px;
       }
-      .documentation {
-        padding-left: 40px;
-        background-image:url('book.png');
-        background-repeat:no-repeat;
-        background-position: left center;
+      .key {
+        position: relative;
+        padding-left: 60px;
+        margin-bottom: 30px;
+      }
+      .key img {
+        position: absolute;
+        left: 0px;
+      }
+      #example {
+        box-shadow: 1px 1px 30px rgba(0,0,0,0.8);
+      }
+      #not_yet {
+        border-radius: 4px;
+        padding: 10px;
+        background-color: #071;
+      }
+
+      #plans {
+        background-color: #053;
+        padding-top: 30px;
+        padding-bottom: 30px;
+        border-radius: 10px;
+        box-shadow: 1px 1px 30px rgba(0,0,0,0.8);
+      }
+      .plan_row {
+        margin-top: 25px;
+        margin-bottom: 25px;
+      }
+      .price_col {
+        font-size: 28px;
+        color: gold;
+        font-weight: bold;
       }
       .download {
         padding-left: 40px;
@@ -201,28 +223,6 @@
         background-image: -webkit-linear-gradient(#0770a0,#0ca6dd);
         -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#0770a0',endColorstr='#0ca6dd')";
       }
-      .button.golden {
-        border: 1px solid #997711;
-        background-color: #DDBB11;
-        background-image: -moz-linear-gradient(#EECC11,#DDBB11);
-        background-image: -webkit-linear-gradient(#EECC11,#DDBB11);
-        -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#EECC11',endColorstr='#DDBB11')";
-      }
-      .codehilite { 
-        background-color: #000;
-        padding: 15px 15px;
-        font-size: 12px;
-        border: 1px solid white;
-        border-radius: 5px;
-        margin: auto;
-        color: #fff;
-      }
-      .codehilite .s { color: #AA3300 } /* Literal.String */
-      .codehilite .o { color: #555555 } /* Operator */
-      .codehilite .k { color: #006699; font-weight: bold } /* Keyword */
-      .codehilite .s2 { color: #CC3300 } /* Literal.String.Double */
-      .codehilite .mi { color: #008800 } /* Literal.Number.Integer */
-      #example{ vertical-align: top; }
     </style>
     <script type="text/javascript">
       var _gaq = _gaq || [];
@@ -233,28 +233,19 @@
        ga.src = 'http://www.google-analytics.com/ga.js';
        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
       })();
-      (function() {
-       var s = document.createElement('script'), t = document.getElementsByTagName('script')[0];
-       s.type = 'text/javascript'; s.async = true; s.src = 'http://api.flattr.com/js/0.6/load.js?mode=auto';
-       t.parentNode.insertBefore(s, t);
-      })();
     </script>
     <meta name="google-site-verification" content="mWJTI5Ft8Gx4c-W-PaHSTWkdriLE4EgqN0fZ6HTE5kU" />
   </head>
   <body>
-    <!-- <a id='playing' href='https://events.ccc.de/congress/2012/wiki/Info-beamer'>As seen in action @ 29c3 in Hamburg</a> -->
+    <!-- <a id='playing' href='https://events.ccc.de/congress/2012/wiki/Info-beamer'>See info-beamer in action @ 29c3 in Hamburg</a> -->
     <div id='head'>
       <div class="container_12">
         <div class='grid_12 head_grid'>
           <h1 id='name'>info-beamer</h1>
-          <h2 id='sub'>The Multimedia Presenter for Lua</h2>
+          <h2 id='sub'>The Digital Signage Player for the PI</h2>
+          <img id='pi-img' src='pi.png'/>
           <div id='action'>
-            <a href='/doc/' class='button'><span class='documentation'>Documentation</span></a>
-            <a href='http://github.com/dividuum/info-beamer' class='button'><span class='download'>Project page</span></a>
-          </div>
-          <div id='pi-version'>
-            <a href='/pi/' class='button golden'>Raspberry PI Version</a>
-            <img src='pi-version.png'>
+            <a href='/doc/' class='button'><span class='download'>Get it now</span></a>
           </div>
           <div id="flattr-button">
             <a class="FlattrButton" style="display:none;" href="http://info-beamer.org/"></a>
@@ -269,176 +260,171 @@
     </div>
     <div id='body'>
       <div class="container_12">
-        <div class='grid_3'>
+        <div class='grid_6'>
           <h2>About</h2>
-        </div>
-        <div class='grid_9'>
-          <h2>Hello World Example</h2>
-        </div>
-      </div>
-      <div class="container_12">
-        <div class='grid_3'>
-          <b>info-beamer</b> allows you to rapidly prototype interactive multimedia
-          presentations using the Lua programming language.  A directory (called a node)
-          consists of resource files (images, videos, fonts or shaders) and
-          a control script called node.lua. Learn more in the <a href='/doc/'>documentation</a>.
-        </div>
-        <div class='grid_9'>
-          <table><tr><td id='example'><br/>
-<!-- hello world -->
-<div class="codehilite"><pre><span class="n">gl</span><span class="p">.</span><span class="n">setup</span><span class="p">(</span><span class="mi">1024</span><span class="p">,</span> <span class="mi">768</span><span class="p">)</span>
-
-<span class="n">font</span> <span class="o">=</span> <span class="n">resource</span><span class="p">.</span><span class="n">load_font</span><span class="p">(</span><span class="s2">&quot;</span><span class="s">silkscreen.ttf&quot;</span><span class="p">)</span>
-
-<span class="k">function</span> <span class="nc">node</span><span class="p">.</span><span class="nf">render</span><span class="p">()</span>
-    <span class="n">font</span><span class="p">:</span><span class="n">write</span><span class="p">(</span><span class="mi">120</span><span class="p">,</span> <span class="mi">320</span><span class="p">,</span> <span class="s2">&quot;</span><span class="s">Hello World&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
-<span class="k">end</span>
-</pre></div>
-<!-- hello world -->
-            See the <a href='/doc/#first-steps'>documentation</a> for more examples.
-          </td><td id='hello'>
-            <img src='hello.png'>
-          </td></tr></table>
-        </div>
-      </div>
-      <div class="container_12">
-        <div class='grid_6'>
-          <h3>Rapid Development</h3>
+          <b>info-beamer pi</b> is a specially crafted version of <a href='/'>info-beamer</a> for the 
+          <a href='http://www.raspberrypi.org/'>Raspberry PI</a>. It is the most powerful digital signage player currently available for the
+          Raspberry PI.
         </div>
         <div class='grid_6'>
-          <h3>Powered by Lua</h3>
         </div>
       </div>
-      <div class="container_12">
-        <div class='grid_2'>
-          <img src='autoupdate.png'>
-        </div>
-        <div class='grid_4'>
-          Edit the code for your node, change images or exchange font
-          files. <b>info-beamer</b> will notice your changes and reload changed
-          files.  See the effects of your changes immediatelly.
-
-          <ul>
-            <li><b>info-beamer</b> uses the linux inotify API to detect changed files or directories.
-            <li>You never have to restart <b>info-beamer</b> to see changes you made. <b>info-beamer</b> can 
-                <a href='/doc/#utilresource95loadertable95of95filenames'>reload updated files</a> for you.
-          </ul>
-        </div>
-        <div class='grid_2'>
-          <img src='lua.png'>
-        </div>
-        <div class='grid_4'>
-          <b>info-beamer</b> is controlled by your Lua code. A very simple API
-          is all you need to create advanced presentations. Lua enables
-          <b>info-beamer</b> to be truly rapid:
-
-          <ul>
-            <li><a href='/doc/#node-events'>Update the running code</a> in realtime. There is no need to restart <b>info-beamer</b>.
-            <li>Lua is a simple language. If you have basic programming experience, 
-                you'll learn Lua in a few hours.
-          </ul>
-        </div>
-      </div>
-      <div class="container_12">
+      <div class="container_12 feature_row">
         <div class='grid_6'>
-          <h3>Fileformat Support</h3>
+          <div class='key'>
+            <img src='hw.png'>
+            <h3>Hardware Accelerated</h3>
+            <b>info-beamer pi</b> is optimized for the PI. It uses hardware decoding for 
+            H.264 videos and JPEG files. The rendering is done in hardware using 
+            OpenGL ES 2.0.
+          </div>
+
+          <div class='key'>
+            <img src='power.png'>
+            <h3>Saves Energy</h3>
+            Running <b>info-beamer pi</b> 24x7 requires 
+            <a href='http://elinux.org/RPi_Hardware#Specifications'>around 700mA</a> (3.5 W). This 
+            translates to around 6&euro; per year.
+          </div>
+
+          <div class='key'>
+            <img src='lua.png'>
+            <h3>Powered by Lua</h3>
+            There is almost no limit on what you can display. Everything can be 
+            customized using the <a href='http://www.lua.org/about.html'>Lua programming Language</a>. 
+            Include realtime effects using accelerated <a href='http://en.wikipedia.org/wiki/GLSL'>GLSL shaders</a>.
+          </div>
+
+          <div class='key'>
+            <img src='doc.png'>
+            <h3>Fully documented</h3>
+            <b>info-beamer pi</b> is <a href='/doc'>fully documented</a>. 
+            <a href='https://github.com/dividuum/info-beamer-nodes'>Sample code</a> is available to get you started.
+          </div>
         </div>
         <div class='grid_6'>
-          <h3>Performance</h3>
+          <img id='example' src='action.jpg'>
         </div>
       </div>
-      <div class="container_12">
-        <div class='grid_2'>
-          <img src='filetypes.png'>
+      <div id='plans'>
+        <div class="container_12 plan_row">
+          <div class='prefix_3 grid_3'>
+            <h3>Private</h3>
+          </div>
+          <div class='grid_3'>
+            <h3>Non-Profit</h3>
+          </div>
+          <div class='grid_3'>
+            <h3>Commercial</h3>
+          </div>
         </div>
-        <div class='grid_4'>
-          Load images and truetype (TTF) fonts. Video playback is
-          supported using the powerful libav library.
-
-          <ul>
-            <li><a href='/doc/#image-resourceload95imagefilename'>Image loading</a> is provided by DevIL.
-            <li><a href='/doc/#videos'>Video playback</a> is powered by libav. It should play most video 
-                files you might have.
-            <li>Use Shaders in the GLSL language.
-            <li>Full <a href='/doc/#font-resourceload95fontfilename'>Truetype font support</a> using freetype.
-          </ul>
+        <div class="container_12 plan_row">
+          <div class='grid_3'>
+            Intended usecase
+          </div>
+          <div class='grid_3'>
+            Use it for yourself at home
+          </div>
+          <div class='grid_3'>
+            Run a visualization you built yourself in a public space while not being paid for it.
+          </div>
+          <div class='grid_3'>
+            Sell it as part of a service business. Be paid for developing visualizations or installations.
+          </div>
         </div>
-        <div class='grid_2'>
-          <img src='performance.png'>
+        <div class="container_12 plan_row">
+          <div class='grid_3'>
+            Fully hardware accelerated
+          </div>
+          <div class='grid_3'>&#x2713;</div>
+          <div class='grid_3'>&#x2713;</div>
+          <div class='grid_3'>&#x2713;</div>
         </div>
-        <div class='grid_4'>
-          <b>info-beamer</b> uses OpenGL and will use hardware acceleration.
-          Full shader support using GLSL.
-
-          <ul>
-            <li>Load <a href='/doc/#shader-resourcecreate95shadervertex95shader-fragment95shader'>vertex and fragment shaders</a>.
-            <li>Control your shaders with <a href='/doc/#shaderusetable95of95shader95variables'>dynamic uniform values</a>.
-            <li>Feed your shaders with textures from images, videos, 
-                child nodes or even VNC connections.
-          </ul>
+        <div class="container_12 plan_row">
+          <div class='grid_3'>
+            Free Updates
+          </div>
+          <div class='grid_3'>&#x2713;</div>
+          <div class='grid_3'>&#x2713;</div>
+          <div class='grid_3'>&#x2713;</div>
+        </div>
+        <div class="container_12 plan_row">
+          <div class='grid_3'>
+            Branding
+          </div>
+          <div class='grid_3'>
+            Small logo displayed every minute
+          </div>
+          <div class='grid_3'>
+            Small logo displayed every minute
+          </div>
+          <div class='grid_3'>
+            Not required
+          </div>
+        </div>
+        <div class="container_12 plan_row">
+          <div class='grid_3'>
+            Price
+          </div>
+          <div class='grid_3'>
+            <div class='price_col'>
+              Free
+            </div>
+          </div>
+          <div class='grid_3'>
+            <div class='price_col'>
+              10 &euro; / Screen
+            </div>
+          </div>
+          <div class='grid_3'>
+            <div class='price_col'>
+              40 &euro; / Screen
+            </div>
+          </div>
+        </div>
+        <!--
+        <div class="container_12 plan_row">
+          <div class='prefix_3 grid_3'>
+            <div class='button'>
+              Download
+            </div>
+          </div>
+          <div class='grid_3'>
+            <div class='button'>
+              Download
+            </div>
+          </div>
+          <div class='grid_3'>
+            <div class='button'>
+              Download
+            </div>
+          </div>
+        </div>
+        -->
+        <div class="container_12 plan_row">
+          <div class='grid_3'>
+            Where to get
+          </div>
+          <div class='grid_9'>
+            <div id='not_yet'>
+              <b>info-beamer to the PI</b> will be available soon. Please get in 
+              <a href='mailto:hello@info-beamer.org'>get in contact</a>, if you would
+              like to try out the current test version.
+            </div>
+          </div>
+        </div>
+        <div class="container_12 plan_row">
+          <div class='grid_3'>
+            Support
+          </div>
+          <div class='grid_9'>
+            Please <a href='mailto:hello@info-beamer.org'>get in contact</a> for support options.
+          </div>
         </div>
       </div>
-      <div class="container_12">
-        <div class='grid_6'>
-          <h3>Nested Content</h3>
-        </div>
-        <div class='grid_6'>
-          <h3>Realtime control</h3>
-        </div>
-      </div>
-      <div class="container_12">
-        <div class='grid_2'>
-          <img src='nested.png'>
-        </div>
-        <div class='grid_4'>
-          Each directory forms a node. A node is the unit of presentation
-          for <b>info-beamer</b>. If a directory contains subdirectories, these
-          create child nodes. Child nodes can be rendered by parent
-          nodes. 
-
-          <ul>
-            <li>Allows you to create a toplevel node that switches between child nodes.
-            <li>Nodes can be developed independently and later 
-                <a href='/doc/#rendering-child-nodes'>composed into one presentation</a>.
-            <li>Include remote content using the <a href='/doc/#vnc-resourcecreate95vnchostname-port'>VNC client</a>.
-          </ul>
-        </div>
-        <div class='grid_2'>
-          <img src='control.png'>
-        </div>
-        <div class='grid_4'>
-          Send OSC (open sound control) packets to <b>info-beamer</b>. Update
-          the state of your presentation in realtime. Or use TCP to
-          connect to <b>info-beamer</b> to see the debugging output of your
-          running code.
-
-          <ul>
-            <li>Simple <a href='/doc/#nodeeventdata-functiondata-suffix-end'>UDP protocol</a>
-                and <a href='/doc/#nodeeventosc-functionsuffix-end'>OSC protocol</a> support.
-            <li>Let <b>info-beamer</b> display a directory shared using Dropbox. Since <b>info-beamer</b> will
-                detect any changes to the directory, this will allow you
-                to update your presentation from remote.
-          </ul>
-        </div>
-      </div>
-      <div class="container_12">
-        <div class='grid_6'>
-          <h3>Opensource</h3>
-        </div>
-        <div class='grid_6'>
-          <h3>Ready?</h3>
-        </div>
-      </div>
-      <div class="container_12">
-        <div class='grid_2'>
-          <img src='opensource.png'>
-        </div>
-        <div class='grid_4'>
-          <b>info-beamer</b> is opensource software release under the BSD
-          2-clause license. <a href='https://github.com/dividuum/info-beamer'>Use and modify</a> the software as you like.
-        </div>
-        <div class='grid_4 push_2'>
-          <a href='http://github.com/dividuum/info-beamer' class='button'><span class='download'>Get it on GitHub</span></a>
+      <div class="container_12 plan_row">
+        <div class='grid_12'>
+          The <a href='/'>desktop version for Linux</a> is also available for free as an open source version.
         </div>
       </div>
     </div>
