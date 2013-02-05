@@ -159,7 +159,7 @@
       }
       #not_yet {
         border-radius: 4px;
-        padding: 10px;
+        padding: 22px;
         background-color: #071;
       }
 
@@ -171,8 +171,8 @@
         box-shadow: 1px 1px 30px rgba(0,0,0,0.8);
       }
       .plan_row {
-        margin-top: 25px;
-        margin-bottom: 25px;
+        margin-top: 30px;
+        margin-bottom: 30px;
       }
       .price_col {
         font-size: 28px;
@@ -184,6 +184,10 @@
         background-image:url('download.png');
         background-repeat:no-repeat;
         background-position: left center;
+      }
+      .small {
+        font-size: 13px;
+        margin-top: 3px;
       }
       .button {
         padding: 15px 15px;
@@ -234,7 +238,6 @@
        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
       })();
     </script>
-    <meta name="google-site-verification" content="mWJTI5Ft8Gx4c-W-PaHSTWkdriLE4EgqN0fZ6HTE5kU" />
   </head>
   <body>
     <!-- <a id='playing' href='https://events.ccc.de/congress/2012/wiki/Info-beamer'>See info-beamer in action @ 29c3 in Hamburg</a> -->
@@ -246,14 +249,6 @@
           <img id='pi-img' src='pi.png'/>
           <div id='action'>
             <a href='#plans' class='button'><span class='download'>Get it now</span></a>
-          </div>
-          <div id="flattr-button">
-            <a class="FlattrButton" style="display:none;" href="http://info-beamer.org/"></a>
-            <noscript>
-              <a href="http://flattr.com/thing/869366/Info-Beamer" target="_blank">
-                <img src="http://api.flattr.com/button/flattr-badge-large.png" alt="Flattr this" title="Flattr this" border="0"/>
-              </a>
-            </noscript>
           </div>
         </div>
       </div>
@@ -342,7 +337,7 @@
         </div>
         <div class="container_12 plan_row">
           <div class='grid_3'>
-            Free Updates
+            Free updates
           </div>
           <div class='grid_3'>&#x2713;</div>
           <div class='grid_3'>&#x2713;</div>
@@ -382,34 +377,21 @@
             </div>
           </div>
         </div>
-        <!--
-        <div class="container_12 plan_row">
-          <div class='prefix_3 grid_3'>
-            <div class='button'>
-              Download
-            </div>
-          </div>
-          <div class='grid_3'>
-            <div class='button'>
-              Download
-            </div>
-          </div>
-          <div class='grid_3'>
-            <div class='button'>
-              Download
-            </div>
-          </div>
-        </div>
-        -->
         <div class="container_12 plan_row">
           <div class='grid_3'>
             Where to get
           </div>
-          <div class='grid_9'>
+          <div class='grid_3'>
+            <a href='http://dividuum.de/download/info-beamer/info-beamer-pi-0.1-beta.4caaf6.tar.gz' class='button'
+               onClick="_gaq.push(['_trackEvent', 'Action', 'Download', '0.1-beta']);">
+               <span class='download'>Download</span>
+            </a>
+            <br/>
+            <div class='small'>Version 0.1-beta</div>
+          </div>
+          <div class='grid_6'>
             <div id='not_yet'>
-              <b>info-beamer to the PI</b> will be available soon. Please get in 
-              <a href='mailto:hello@info-beamer.org'>get in contact</a>, if you would
-              like to try out the current test version.
+              Please get in <a href='mailto:hello@info-beamer.org'>get in contact</a>.
             </div>
           </div>
         </div>
