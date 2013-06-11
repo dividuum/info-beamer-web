@@ -222,6 +222,7 @@ language</a>.</p>
 <li><a href="#video-resourceload95videofilename">video = resource.load_video(filename)</a><ul>
 <li><a href="#videodrawx1-y1-x2-y2">video:draw(x1, y1, x2, y2)</a></li>
 <li><a href="#has95next95frame-videonext">has_next_frame = video:next()</a></li>
+<li><a href="#videoset95looploop">video:set_loop(loop)</a></li>
 <li><a href="#width-height-videosize">width, height = video:size()</a></li>
 <li><a href="#fps-videofps">fps = video:fps()</a></li>
 </ul>
@@ -232,7 +233,7 @@ language</a>.</p>
 </ul>
 </li>
 <li><a href="#string-resourceload95filefilename">string = resource.load_file(filename)</a></li>
-<li><a href="#shader-resourcecreate95shadervertex95shader-fragment95shader">shader = resource.create_shader(vertex_shader, fragment_shader)</a><ul>
+<li><a href="#shader-resourcecreate95shaderfragment95shader">shader = resource.create_shader(fragment_shader)</a><ul>
 <li><a href="#shaderusetable95of95shader95variables">shader:use(table_of_shader_variables)</a></li>
 <li><a href="#shaderdeactivate">shader:deactivate()</a></li>
 </ul>
@@ -276,7 +277,9 @@ language</a>.</p>
 <li><a href="#nodeeventcontent95remove-functionfilename-end">node.event("content_remove", function(filename) ... end)</a></li>
 <li><a href="#nodeeventdata-functiondata-suffix-end">node.event("data", function(data, suffix) ... end)</a></li>
 <li><a href="#nodeeventosc-functionsuffix-end">node.event("osc", function(suffix, ...) ... end)</a></li>
-<li><a href="#nodeeventinput-functionline-end">node.event("input", function(line) ... end)</a></li>
+<li><a href="#nodeeventinput-functionline-client-end">node.event("input", function(line, client) ... end)</a></li>
+<li><a href="#nodeeventconnect-functionclient-end">node.event("connect", function(client) ... end)</a></li>
+<li><a href="#nodeeventdisconnect-functionclient-end">node.event("disconnect", function(client) ... end)</a></li>
 </ul>
 </li>
 <li><a href="#utility-functions">Utility Functions</a><ul>
@@ -534,26 +537,7 @@ HEIGHT</code> (bottom right corner of the screen). WIDTH and HEIGHT will be
 initialized with the values from the <code>gl.setup</code> call.</p>
 <h3 id="videos">Videos</h3>
 <p>You can load videos and display them. Doing so is quite similar to image
-loading:</p>
-<div class="codehilite"><pre><span class="n">gl</span><span class="p">.</span><span class="n">setup</span><span class="p">(</span><span class="mi">1024</span><span class="p">,</span> <span class="mi">768</span><span class="p">)</span>
-
-<span class="n">video</span> <span class="o">=</span> <span class="n">resource</span><span class="p">.</span><span class="n">load_video</span><span class="p">(</span><span class="s2">&quot;</span><span class="s">video.mp4&quot;</span><span class="p">)</span>
-
-<span class="k">function</span> <span class="nc">node</span><span class="p">.</span><span class="nf">render</span><span class="p">()</span>
-    <span class="n">video</span><span class="p">:</span><span class="nb">next</span><span class="p">()</span>
-    <span class="n">video</span><span class="p">:</span><span class="n">draw</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">WIDTH</span><span class="p">,</span> <span class="n">HEIGHT</span><span class="p">)</span>
-<span class="k">end</span>
-</pre></div>
-
-
-<p><code>video</code> now contains a video object. Calling <code>video:next</code> will read the
-next frame of the video. <code>video:draw</code> will then display this frame. You'll
-notice that video playback will be too fast. Since <code>node.render</code> is called
-for each frame <code>info-beamer</code> wants to display, it's most likely that this
-function will be called 60 times per seconds (the refresh rate of your
-monitor).  Likewise your video might have 25 frames per seconds. So
-you'll have to slow down decoding to the actual framerate of the video.
-<code>util.videoplayer</code> will do all of this for you:</p>
+loading. <code>util.videoplayer</code> provides an easy way to do this:</p>
 <div class="codehilite"><pre><span class="n">gl</span><span class="p">.</span><span class="n">setup</span><span class="p">(</span><span class="mi">1024</span><span class="p">,</span> <span class="mi">768</span><span class="p">)</span>
 
 <span class="n">video</span> <span class="o">=</span> <span class="n">util</span><span class="p">.</span><span class="n">videoplayer</span><span class="p">(</span><span class="s2">&quot;</span><span class="s">video.mp4&quot;</span><span class="p">)</span>
@@ -566,7 +550,8 @@ you'll have to slow down decoding to the actual framerate of the video.
 
 <p><code>util.videoplayer</code> is a helper function that provides a small wrapper
 around video resources. It will automatically decode the video using the
-correct framerate.</p>
+correct framerate. Using the <code>draw</code> function displays the current video
+frame.</p>
 <h3 id="rendering-child-nodes">Rendering Child Nodes</h3>
 <p>A directory (called a node) can contain subdirectories. Each subdirectory
 is then loaded as a child node. The parent node can render child nodes like
@@ -674,11 +659,10 @@ create the server, be sure that you are in a secure environment. Inside
 <code>node.render</code> the content of the remote desktop is drawn onto the screen.</p>
 <h3 id="using-glsl-shaders">Using GLSL Shaders</h3>
 <p><code>info-beamer</code> supports GLSL shaders. Shaders are small programs that run on
-the GPU.  They enable various realtime effects using the raw power of your
-GPU.  Shaders come in pairs: A vertex shader and a fragment shader. Vertex
-shaders are responsible for transforming 3D positions. Fragment shaders
-then calculate the color displayed on each visible pixel of the transformed
-object. Fragment shaders can be used to create stunning realtime effects.
+the GPU. They enable various realtime effects using the raw power of your
+GPU. You can use fragment shaders with info-beamer. Fragment shaders 
+calculate the color displayed for each visible pixel of rendered objects.
+They can be used to create stunning realtime effects.
 <code>info-beamer</code> enables you to pass numeric values and additional textures
 into the shader. This allows you to do all kinds of crazy stuff like for
 example blending videos with static textures.</p>
@@ -706,16 +690,16 @@ very easy. You just give it a number of filenames. It will then detect
 which loader is responsible for the given fileformat and load the file into
 a global variable whose name is derived from the filename. The above code
 will load the image <code>lua.png</code> into the global variable <code>lua</code>. It will also
-load the shader pair <code>shader.vert</code> and <code>shader.frag</code> into the global
-variable <code>shader</code>. The resource loader will also make sure that changed
-files will be reloaded. So if you edit and save for example <code>shader.frag</code>,
-<code>info-beamer</code> will instantly reload the shader. You can see changes
-to your effect immediatelly. This is great for rapidly developing effects.</p>
+load the shader <code>shader.frag</code> into the global variable <code>shader</code>. The resource 
+loader will also make sure that changed files will be reloaded. So if you edit 
+and save for example <code>shader.frag</code>, <code>info-beamer</code> will instantly reload the 
+shader. You can see changes to your effect immediatelly. This is great for 
+rapidly developing effects.</p>
 <p>Inside of <code>node.render</code> we first clear the screen. Then we activate the
-shader, which was automatically created from the files <code>shader.vert</code> and
-<code>shader.frag</code> by <code>util.resource_loader</code>. We pass in a variable <code>Effect</code>
-which depends on a time value.  Finally, we draw <code>lua.png</code> with the
-applied shader. This will create a dynamic effect.</p>
+shader, which was automatically created from the file <code>shader.frag</code> by 
+<code>util.resource_loader</code>. We pass in a variable <code>Effect</code> which depends on a time 
+value.  Finally, we draw <code>lua.png</code> with the applied shader. This will create 
+a dynamic effect.</p>
 <h1 id="reference">Reference</h1>
 <h2 id="resource-loading">Resource Loading</h2>
 <h3 id="image-resourceload95imagefilename">image = resource.load_image(filename)</h3>
@@ -728,13 +712,23 @@ most common file formats.</p>
 <h4 id="width-height-imagesize">width, height = image:size()</h4>
 <p>Returns the size of the image.</p>
 <h3 id="video-resourceload95videofilename">video = resource.load_video(filename)</h3>
-<p>Loads any supported video file and returns a 
-<code>video</code> object. The <code>video</code> objects supports the following methods:</p>
+<p>Loads any supported video file and returns a <code>video</code> object. Is is 
+<strong>strongly recommended</strong> not to use the video object directly. Use the more 
+convenient function util.videoplayer for loading and playing videos.</p>
+<p>The <code>video</code> objects supports the following methods:</p>
 <h4 id="videodrawx1-y1-x2-y2">video:draw(x1, y1, x2, y2)</h4>
 <p>Draws the current video frame into a rectangle specified by the give coordinates.</p>
 <h4 id="has95next95frame-videonext">has_next_frame = video:next()</h4>
-<p>Decodes the next frame of the video. Returns true, if a frame was decoded
-or false if there was no next frame.</p>
+<p>On the desktop version: Decodes the next frame of the video. Returns true, if 
+a frame was decoded or false if there was no next frame.</p>
+<p>On the PI version: Checks, if the current video has more frames available. 
+Returns false if the video has ended. The PI version does not support single 
+stepping through a video.</p>
+<h4 id="videoset95looploop">video:set_loop(loop)</h4>
+<p>Only available on the PI version: Set the loop flag for video playback. 
+By default, the loaded video will not be looped. The end of the video can
+be detected using video:next(). If <code>loop</code> is true, the video will be looped.
+The loop flag can be changed while playback is active.</p>
 <h4 id="width-height-videosize">width, height = video:size()</h4>
 <p>Returns the size of the video.</p>
 <h4 id="fps-videofps">fps = video:fps()</h4>
@@ -750,16 +744,44 @@ will return the width of the rendered text in screen space.</p>
 <p><code>text</code> must be <code>UTF8</code> encoded, if you intend to use characters outside the
 ascii range.</p>
 <h4 id="width-fontwritex-y-text-size-texturelike">width = font:write(x, y, text, size, texturelike)</h4>
-<p>Mostly identical to font:write but will not use a solid color but the
-texturelike object. <code>texturelike</code> can be an image, a video or any other
-<code>texturelike</code> objects. The texture will be used for each character
-individually.</p>
+<p>Only available on the desktop version: Mostly identical to font:write but 
+will not use a solid color but the texturelike object. <code>texturelike</code> can be 
+an image, a video or any other <code>texturelike</code> objects. The texture will be 
+used for each character individually.</p>
 <h3 id="string-resourceload95filefilename">string = resource.load_file(filename)</h3>
 <p>Will load the content of the specified file into a string value.
 At most 16kb (16384 bytes) are readable.</p>
-<h3 id="shader-resourcecreate95shadervertex95shader-fragment95shader">shader = resource.create_shader(vertex_shader, fragment_shader)</h3>
-<p>Will create a new <code>shader</code> object. <code>vertex_shader</code> and <code>fragment_shader</code>
-are strings containing the shaders in the GLSL language.</p>
+<h3 id="shader-resourcecreate95shaderfragment95shader">shader = resource.create_shader(fragment_shader)</h3>
+<p>Will create a new <code>shader</code> object. <code>fragment_shader</code> is the string containing 
+the fragment part of the shader in the GLSL language.</p>
+<p>The following varying und attribute values are defined withing the 
+fragment shader:</p>
+<div class="codehilite"><pre><span class="k">uniform</span> <span class="n">sampler</span> <span class="n">Texture</span><span class="p">;</span> <span class="c1">// Incoming texture surface (image/video)</span>
+<span class="k">varying</span> <span class="k">vec2</span> <span class="n">TexCoord</span><span class="p">;</span> <span class="c1">// Texture coordinate</span>
+<span class="k">uniform</span> <span class="k">vec4</span> <span class="n">Color</span><span class="p">;</span> <span class="c1">// Active color/alpha (e.g. while drawing text)</span>
+</pre></div>
+
+
+<p>The identity fragment shader is:</p>
+<div class="codehilite"><pre><span class="k">uniform</span> <span class="n">sampler</span> <span class="n">Texture</span><span class="p">;</span>
+<span class="k">varying</span> <span class="k">vec2</span> <span class="n">TexCoord</span><span class="p">;</span>
+<span class="k">uniform</span> <span class="k">vec4</span> <span class="n">Color</span><span class="p">;</span>
+<span class="k">void</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">gl_FragColor</span> <span class="o">=</span> <span class="n">texture2D</span><span class="p">(</span><span class="n">Texture</span><span class="p">,</span> <span class="n">TexCoord</span><span class="p">)</span> <span class="o">*</span> <span class="n">Color</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>Within the shader, the following defines are available:</p>
+<div class="codehilite"><pre><span class="c1">// Active in all info-beamer glsl shaders</span>
+<span class="cp">#define INFOBEAMER</span>
+
+<span class="c1">// Depending on the platform info-beamer is running on:</span>
+<span class="cp">#define INFOBEAMER_PLAT_DESKTOP</span>
+<span class="cp">#define INFOBEAMER_PLAT_PI</span>
+</pre></div>
+
+
 <h4 id="shaderusetable95of95shader95variables">shader:use(table_of_shader_variables)</h4>
 <p>Will activate the shader and pass in the given variables. A call might look
 like this:</p>
@@ -935,7 +957,7 @@ you send an OSC packet containing a float to <code>node/slider/1</code>, the <co
 callback will be called with the suffix <code>slider/1</code> and the decoded osc
 values. See <code>util.osc_mapper</code> for an easier way to receive and dispatch osc
 packets.</p>
-<h3 id="nodeeventinput-functionline-end">node.event("input", function(line) ... end)</h3>
+<h3 id="nodeeventinput-functionline-client-end">node.event("input", function(line, client) ... end)</h3>
 <p><code>info-beamer</code> allows incoming TCP connections to port 4444. You'll be
 greeted by a welcome line and are expected to provide a node name.
 <code>info-beamer</code> will return <code>ok!</code> if you provide a valid node name. From this
@@ -951,13 +973,26 @@ used for debugging a node from remote.</p>
 
 <p>Any text you type while connected will trigger the <code>input</code> event. The
 <code>input</code> event will be given the provided line. This can be used to feed a
-node with input from outside sources.</p>
-<div class="codehilite"><pre><span class="n">node</span><span class="p">.</span><span class="n">event</span><span class="p">(</span><span class="s2">&quot;</span><span class="s">input&quot;</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+node with input from outside sources. The second argument <code>client</code> is an 
+opaque value that can be used to differentiate between multiple clients 
+connected to the same node. See the <code>connect</code> and <code>disconnect</code> event.</p>
+<div class="codehilite"><pre><span class="n">node</span><span class="p">.</span><span class="n">event</span><span class="p">(</span><span class="s2">&quot;</span><span class="s">input&quot;</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">client</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="s">Input was: &quot;</span> <span class="o">..</span> <span class="n">line</span><span class="p">)</span>
 <span class="k">end</span><span class="p">)</span>
 </pre></div>
 
 
+<h3 id="nodeeventconnect-functionclient-end">node.event("connect", function(client) ... end)</h3>
+<p>Once a TCP client connects to the <code>info-beamer</code> and selects the node, 
+the connect event will be called. Its only argument is an opaque 
+<code>client</code> value. This value is also provided for the <code>input</code> and 
+<code>disconnect</code> event and can be used in combination with e.g. 
+coroutines to handle clients connections as a session.
+See the sample node in <code>samples/parrot</code> for a short example.</p>
+<h3 id="nodeeventdisconnect-functionclient-end">node.event("disconnect", function(client) ... end)</h3>
+<p><code>info-beamer</code> will call this event once a TCP client disconnects from
+the current node. Its only argument is an opaque client value. See
+<code>input</code> and <code>disconnect</code> for more information.</p>
 <h2 id="utility-functions">Utility Functions</h2>
 <p>All utility functions could be rewritten using the functions decribed
 above. They are provided for your convenience.</p>
@@ -1064,6 +1099,12 @@ packets.</p>
 playback of videos by handling framerate issues. <code>opt_table</code> is an optional
 table containing the key <code>loop</code>. It is a boolean value that indicates if
 the videoplayer should loop the video.</p>
+<p>The behaviour between the desktop and the raspberry pi version differs in 
+regards to playing videos:</p>
+<ul>
+<li>On the PI version, videos will still play, even if the node using the video
+   is not rendered by its parent node.</li>
+</ul>
 <p><code>util.videoplayer</code> will return a <code>video</code> object that has the following method:</p>
 <h4 id="videodrawx1-y1-x2-y2_1">video:draw(x1, y1, x2, y2)</h4>
 <p>Draws the current video frame into a rectangle specified by the give coordinates.</p>
@@ -1199,8 +1240,8 @@ problem.</p>
 
 
 <p>Or if you compiled your own version of luajit2: </p>
-<div class="codehilite"><pre>$ <span class="n">USE_LUAJIT</span><span class="p">=</span>1 <span class="n">LUA_CFLAGS</span><span class="p">=</span><span class="o">-</span><span class="n">I</span><span class="p">.</span><span class="o">./</span><span class="n">luajit</span><span class="o">-</span>2<span class="p">.</span>0<span class="o">/</span><span class="n">src</span> <span class="o">\</span>
-  <span class="n">LUA_LDFLAGS</span><span class="p">=.</span><span class="o">./</span><span class="n">luajit</span><span class="o">-</span>2<span class="p">.</span>0<span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">libluajit</span><span class="p">.</span><span class="n">a</span> <span class="n">make</span>
+<div class="codehilite"><pre><span class="gp">$</span> <span class="nv">USE_LUAJIT</span><span class="o">=</span>1 <span class="nv">LUA_CFLAGS</span><span class="o">=</span>-I../luajit-2.0/src <span class="se">\</span>
+<span class="go">  LUA_LDFLAGS=../luajit-2.0/src/libluajit.a make</span>
 </pre></div>
 
 
