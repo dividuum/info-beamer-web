@@ -219,10 +219,9 @@ language</a>.</p>
 <li><a href="#width-height-imagesize">width, height = image:size()</a></li>
 </ul>
 </li>
-<li><a href="#video-resourceload95videofilename">video = resource.load_video(filename)</a><ul>
+<li><a href="#video-resourceload95videofilename-play_audio">video = resource.load_video(filename, play_audio)</a><ul>
 <li><a href="#videodrawx1-y1-x2-y2">video:draw(x1, y1, x2, y2)</a></li>
 <li><a href="#has95next95frame-videonext">has_next_frame = video:next()</a></li>
-<li><a href="#videoset95looploop">video:set_loop(loop)</a></li>
 <li><a href="#width-height-videosize">width, height = video:size()</a></li>
 <li><a href="#fps-videofps">fps = video:fps()</a></li>
 </ul>
@@ -711,10 +710,12 @@ most common file formats.</p>
 <p>Draws the image into a rectangle specified by the give coordinates.</p>
 <h4 id="width-height-imagesize">width, height = image:size()</h4>
 <p>Returns the size of the image.</p>
-<h3 id="video-resourceload95videofilename">video = resource.load_video(filename)</h3>
+<h3 id="video-resourceload95videofilename-play_audio">video = resource.load_video(filename, play_audio)</h3>
 <p>Loads any supported video file and returns a <code>video</code> object. Is is 
 <strong>strongly recommended</strong> not to use the video object directly. Use the more 
 convenient function util.videoplayer for loading and playing videos.</p>
+<p>The <code>play_audio</code> flag is only available in the PI version. If set to
+<code>true</code>, info-beamer will play the audio track in the video.</p>
 <p>The <code>video</code> objects supports the following methods:</p>
 <h4 id="videodrawx1-y1-x2-y2">video:draw(x1, y1, x2, y2)</h4>
 <p>Draws the current video frame into a rectangle specified by the give coordinates.</p>
@@ -724,17 +725,12 @@ a frame was decoded or false if there was no next frame.</p>
 <p>On the PI version: Checks, if the current video has more frames available. 
 Returns false if the video has ended. The PI version does not support single 
 stepping through a video.</p>
-<h4 id="videoset95looploop">video:set_loop(loop)</h4>
-<p>Only available on the PI version: Set the loop flag for video playback. 
-By default, the loaded video will not be looped. The end of the video can
-be detected using video:next(). If <code>loop</code> is true, the video will be looped.
-The loop flag can be changed while playback is active.</p>
 <h4 id="width-height-videosize">width, height = video:size()</h4>
 <p>Returns the size of the video.</p>
 <h4 id="fps-videofps">fps = video:fps()</h4>
 <p>Returns the frame per seconds as specified by the video file.</p>
 <h3 id="font-resourceload95fontfilename">font = resource.load_font(filename)</h3>
-<p>Loads the given Truetype font file and returns a <code>font</code> object. It
+<p>Loads the given font file (in TTF or OTF format) and returns a <code>font</code> object. It
 supports the following methods:</p>
 <h4 id="width-fontwritex-y-text-size-r-g-b-a">width = font:write(x, y, text, size, r, g, b, [a])</h4>
 <p>Writes the provided <code>text</code> to the coordinates given in <code>x</code> and <code>y</code>. The
@@ -1097,8 +1093,11 @@ packets.</p>
 <h3 id="video-utilvideoplayerfilename-opt95table">video = util.videoplayer(filename, [opt_table])</h3>
 <p>Provides a small wrapper around <code>resource.load_video</code>. Provides simplified
 playback of videos by handling framerate issues. <code>opt_table</code> is an optional
-table containing the key <code>loop</code>. It is a boolean value that indicates if
-the videoplayer should loop the video.</p>
+table containing the following keys:</p>
+<p><code>loop</code> - it is a boolean value that indicates if the videoplayer should 
+loop the video. It defaults to false.</p>
+<p><code>audio</code> - a boolean value to tell info-beamer to play audio too. This
+flag is only available in the PI version. It defaults to false.</p>
 <p>The behaviour between the desktop and the raspberry pi version differs in 
 regards to playing videos:</p>
 <ul>
