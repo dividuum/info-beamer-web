@@ -164,7 +164,7 @@
       </h1>
       <div id='copy'>
         By Florian Wesch &lt;fw@dividuum.de&gt;<br/>
-        Copyright &copy; 2012 Florian Wesch. This manual is available under the same terms as Info Beamer itself. Feel free
+        Copyright &copy; 2014 Florian Wesch. This manual is available under the same terms as Info Beamer itself. Feel free
         to <a href='https://github.com/dividuum/info-beamer/tree/master/doc'>enhance or correct the manual</a> by sending me
         pull requests.
         <br/><br/>
@@ -217,6 +217,7 @@ language</a>.</p>
 <li><a href="#image-resourceload95imagefilename">image = resource.load_image(filename)</a><ul>
 <li><a href="#imagedrawx1-y1-x2-y2">image:draw(x1, y1, x2, y2)</a></li>
 <li><a href="#width-height-imagesize">width, height = image:size()</a></li>
+<li><a href="#imagedispose">image:dispose()</a></li>
 </ul>
 </li>
 <li><a href="#video-resourceload95videofilename-play_audio">video = resource.load_video(filename, play_audio)</a><ul>
@@ -224,6 +225,7 @@ language</a>.</p>
 <li><a href="#has95next95frame-videonext">has_next_frame = video:next()</a></li>
 <li><a href="#width-height-videosize">width, height = video:size()</a></li>
 <li><a href="#fps-videofps">fps = video:fps()</a></li>
+<li><a href="#videodispose">video:dispose()</a></li>
 </ul>
 </li>
 <li><a href="#font-resourceload95fontfilename">font = resource.load_font(filename)</a><ul>
@@ -261,6 +263,8 @@ language</a>.</p>
 </li>
 <li><a href="#misc-functions">Misc Functions</a><ul>
 <li><a href="#sysnow">sys.now()</a></li>
+<li><a href="#sysexit">sys.exit()</a></li>
+<li><a href="#sysset_flagflag-status">sys.set_flag(flag, [status])</a></li>
 </ul>
 </li>
 <li><a href="#node-functions">Node Functions</a><ul>
@@ -710,6 +714,10 @@ most common file formats.</p>
 <p>Draws the image into a rectangle specified by the give coordinates.</p>
 <h4 id="width-height-imagesize">width, height = image:size()</h4>
 <p>Returns the size of the image.</p>
+<h4 id="imagedispose">image:dispose()</h4>
+<p>Only available for the PI version. Removes all resources allocated 
+for this image. Using the image after calling dispose will return
+an error. This is mainly useful in combination with the <code>slow_gc</code> flag.</p>
 <h3 id="video-resourceload95videofilename-play_audio">video = resource.load_video(filename, play_audio)</h3>
 <p>Loads any supported video file and returns a <code>video</code> object. Is is 
 <strong>strongly recommended</strong> not to use the video object directly. Use the more 
@@ -729,6 +737,10 @@ stepping through a video.</p>
 <p>Returns the size of the video.</p>
 <h4 id="fps-videofps">fps = video:fps()</h4>
 <p>Returns the frame per seconds as specified by the video file.</p>
+<h4 id="videodispose">video:dispose()</h4>
+<p>Only available for the PI version. Removes all resources allocated 
+for this video. Using the video after calling dispose will return
+an error. This is mainly useful in combination with the <code>slow_gc</code> flag.</p>
 <h3 id="font-resourceload95fontfilename">font = resource.load_font(filename)</h3>
 <p>Loads the given font file (in TTF or OTF format) and returns a <code>font</code> object. It
 supports the following methods:</p>
@@ -883,6 +895,25 @@ It might look better.</p>
 <h3 id="sysnow">sys.now()</h3>
 <p>Returns a timestamp as a floating point number that will increment by 1 for
 each passing second. The timestamp is relative to the start of <code>info-beamer</code>.</p>
+<h3 id="sysexit">sys.exit()</h3>
+<p>Exits info-beamer. Only available on the PI version. It's disabled unless you
+define the environment variable INFOBEAMER_ALLOW_EXIT.</p>
+<h3 id="sysset_flagflag-status">sys.set_flag(flag, [status])</h3>
+<p>Sets runtime flags that change some behaviour. Only available on the PI version.
+The following flags are available:</p>
+<ul>
+<li><code>slow_gc</code>: Disables the per frame garbage collection and switches
+   to a more relaxed GC mode. This might give you a slightly better
+   performance in exchange for more memory usage. If you activate
+   this, be careful: You'll have to manually dispose rendered child
+   nodes (using :dispose()). Otherwise they will be created faster than
+   the garbage collector can remove them.</li>
+<li><code>no_clear</code>: Removes the implicit gl.clear call while rendering 
+   a node.</li>
+<li><code>no_deadline</code>: Removes the time limit while rendering a node.</li>
+</ul>
+<p><code>status</code> is <code>true</code> by default (and will activate the flag). Use <code>false</code> 
+ to deactivate a flag again.</p>
 <h2 id="node-functions">Node Functions</h2>
 <h3 id="noderender">node.render()</h3>
 <p>You should overwrite this function with your own code. This function will
